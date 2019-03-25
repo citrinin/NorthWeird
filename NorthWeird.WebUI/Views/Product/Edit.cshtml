@@ -1,0 +1,97 @@
+﻿@model NorthWeird.Domain.Entities.Product
+<h1>Edit</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="ProductId" />
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="ProductName"></label>
+            <div class="col-sm-2">
+                <input class="form-control" asp-for="ProductName" />
+            </div>
+        </div>
+        <span asp-validation-for="ProductName"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="CategoryId"></label>
+            <div class="col-sm-2">
+                <select class="form-control"
+                        asp-for="CategoryId"
+                        asp-items="ViewBag.Categories"></select>
+            </div>
+        </div>
+        <span asp-validation-for="CategoryId"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="SupplierId"></label>
+            <div class="col-sm-2">
+                <select class="form-control" asp-for="SupplierId"
+                        asp-items="ViewBag.Suppliers"></select>
+            </div>
+        </div>
+        <span asp-validation-for="SupplierId"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="QuantityPerUnit"></label>
+            <div class="col-sm-2">
+                <input class="form-control" asp-for="QuantityPerUnit" />
+            </div>
+        </div>
+        <span asp-validation-for="QuantityPerUnit"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="UnitPrice"></label>
+            <div class="col-sm-2">
+                <input class="form-control" asp-for="UnitPrice" />
+            </div>
+        </div>
+        <span asp-validation-for="UnitPrice"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="UnitsInStock"></label>
+            <div class="col-sm-2">
+                <input class="form-control" asp-for="UnitsInStock" />
+             </div>
+        </div>
+        <span asp-validation-for="UnitsInStock"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="UnitsOnOrder"></label>
+            <div class="col-sm-2">
+                <input class="form-control" asp-for="UnitsOnOrder" />
+            </div>
+        </div>
+        <span asp-validation-for="UnitsOnOrder"></span>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-form-label" asp-for="ReorderLevel"></label>
+            <div class="col-sm-2">
+                <input class="form-control" asp-for="ReorderLevel" />
+            </div>
+        </div>
+        <span asp-validation-for="ReorderLevel"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <input class="form-check-input" asp-for="Discontinued" />
+        <label class="form-check-label" asp-for="Discontinued"></label>
+    </div>
+
+    <input class="btn btn-primary" type="submit" name="update" value="Update" />
+    <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+</form>

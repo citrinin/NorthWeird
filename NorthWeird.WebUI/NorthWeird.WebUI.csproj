@@ -10,4 +10,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NorthWeird.Application\NorthWeird.Application.csproj" />
+    <ProjectReference Include="..\NorthWeird.Infrastructure\NorthWeird.Infrastructure.csproj" />
+    <ProjectReference Include="..\NorthWeird.Persistence\NorthWeird.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<NorthWeird.Domain.Entities.Product>
+<a class="btn btn-primary py-2 my-2" asp-action="Create">Add new product</a>
+<table class="table table-hover table-sm">
+    <tr>
+        <th>Product name</th>
+        <th>Category</th>
+        <th>Supplier</th>
+        <th>Edit</th>
+    </tr>
+
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.ProductName</td>
+            <td>@product.Category?.CategoryName</td>
+            <td>@product.Supplier?.CompanyName</td>
+            <td><a class="btn bg-light" asp-action="Edit" asp-route-id="@product.ProductId">Edit product</a></td>
+        </tr>
+    }
+
+</table>
