@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Services;
+using NorthWeird.Application.Validation;
+using NorthWeird.Domain.Entities;
 using NorthWeird.Persistence;
 using NorthWeird.WebUI.Middleware;
 
@@ -35,7 +38,7 @@ namespace NorthWeird.WebUI
 
             _logger.LogInformation(string.Join(Environment.NewLine, _configuration.AsEnumerable().Select((k, v) => $"{k.Key} - {k.Value}")));
 
-            services.AddMvc();
+            services.AddMvc().AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<ProductValidator>());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NorthWeird.Domain.Entities
+﻿namespace NorthWeird.Domain.Entities
 {
     public class Supplier
     {

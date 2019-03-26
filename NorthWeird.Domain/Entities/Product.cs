@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace NorthWeird.Domain.Entities
+﻿namespace NorthWeird.Domain.Entities
 {
     public class Product
     {
