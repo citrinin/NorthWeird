@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.Persistence", "N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.Domain", "NorthWeird.Domain\NorthWeird.Domain.csproj", "{03A410C4-6EE4-40D3-AF7A-AC735B4BE0DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWeird.Infrastructure", "NorthWeird.Infrastructure\NorthWeird.Infrastructure.csproj", "{ADBE5754-04DB-418F-8F97-9D6C80626D42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.Infrastructure", "NorthWeird.Infrastructure\NorthWeird.Infrastructure.csproj", "{ADBE5754-04DB-418F-8F97-9D6C80626D42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{16478D18-C1FB-4808-91BC-6486B6BBFF25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
