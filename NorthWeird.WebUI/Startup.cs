@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Services;
 using NorthWeird.Application.Validation;
-using NorthWeird.Domain.Entities;
 using NorthWeird.Persistence;
 using NorthWeird.WebUI.Middleware;
 
