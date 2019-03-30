@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.Infrastructure",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{16478D18-C1FB-4808-91BC-6486B6BBFF25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWeird.Application.Tests", "NorthWeird.Application.Tests\NorthWeird.Application.Tests.csproj", "{0AE489F6-C99A-4B49-A44A-759F8ABBF403}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{ADBE5754-04DB-418F-8F97-9D6C80626D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADBE5754-04DB-418F-8F97-9D6C80626D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADBE5754-04DB-418F-8F97-9D6C80626D42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AE489F6-C99A-4B49-A44A-759F8ABBF403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AE489F6-C99A-4B49-A44A-759F8ABBF403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AE489F6-C99A-4B49-A44A-759F8ABBF403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AE489F6-C99A-4B49-A44A-759F8ABBF403}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{849D03F7-7B2C-42BF-B32E-76522AAD08EB} = {510FAF6B-0F45-4B41-92DF-C8A4771DC56B}
 		{03A410C4-6EE4-40D3-AF7A-AC735B4BE0DB} = {542633AE-392E-4F5E-8C84-A05F3D9E3623}
 		{ADBE5754-04DB-418F-8F97-9D6C80626D42} = {510FAF6B-0F45-4B41-92DF-C8A4771DC56B}
+		{0AE489F6-C99A-4B49-A44A-759F8ABBF403} = {16478D18-C1FB-4808-91BC-6486B6BBFF25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75ABECF3-0361-4E29-9C6D-017960EB791F}
