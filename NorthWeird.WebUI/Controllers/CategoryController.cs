@@ -17,7 +17,7 @@ namespace NorthWeird.WebUI.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
-            return View(await _categoryData.GetAll());
+            return View(await _categoryData.GetAllAsync());
         }
     }
 }

@@ -6,6 +6,6 @@ namespace NorthWeird.Application.Interfaces
 {
     public interface ISupplierData
     {
-        Task<IEnumerable<Supplier>> GetAll();
+        Task<IEnumerable<Supplier>> GetAllAsync();
     }
 }

@@ -6,12 +6,13 @@ using NorthWeird.Domain.Entities;
 
 namespace NorthWeird.Application.Tests.Infrastructure
 {
-    public class NorthWeirdContextFactory
+    public class NorthWeirdDbContextFactory
     {
         public static NorthWeirdDbContext Create()
         {
             var options = new DbContextOptionsBuilder<NorthWeirdDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .EnableSensitiveDataLogging()
                 .Options;
             var context = new NorthWeirdDbContext(options);
 

@@ -8,13 +8,6 @@ namespace NorthWeird.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICategoryData _categoryData;
-
-        public HomeController(ICategoryData categoryData)
-        {
-            _categoryData = categoryData;
-        }
-        // GET: /<controller>/
         public IActionResult Index()
         {
             return View();

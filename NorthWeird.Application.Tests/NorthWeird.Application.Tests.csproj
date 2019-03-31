@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NorthWeird.Application\NorthWeird.Application.csproj" />
     <ProjectReference Include="..\NorthWeird.Persistence\NorthWeird.Persistence.csproj" />
   </ItemGroup>
 

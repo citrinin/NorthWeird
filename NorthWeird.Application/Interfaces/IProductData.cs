@@ -6,12 +6,12 @@ namespace NorthWeird.Application.Interfaces
 {
     public interface IProductData
     {
-        Task<IEnumerable<Product>> GetAll();
+        Task<IEnumerable<Product>> GetAllAsync();
 
-        Task<Product> Add(Product product);
+        Task<Product> AddAsync(Product product);
 
-        Task<Product> Get(int id);
+        Task<Product> GetAsync(int id);
 
-        Task<Product> Update(Product product);
+        Task<Product> UpdateAsync(Product product);
     }
 }

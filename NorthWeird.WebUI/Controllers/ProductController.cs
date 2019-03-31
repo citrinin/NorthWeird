@@ -26,7 +26,7 @@ namespace NorthWeird.WebUI.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
-            return View(await _productData.GetAll());
+            return View(await _productData.GetAllAsync());
         }
 
         [HttpGet]
@@ -43,7 +43,7 @@ namespace NorthWeird.WebUI.Controllers
             if (ModelState.IsValid)
             {
 
-               var newProduct = await _productData.Add(model);
+               var newProduct = await _productData.AddAsync(model);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -57,7 +57,11 @@ namespace NorthWeird.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await _productData.Get(id);
+            var model = await _productData.GetAsync(id);
+            if (model == null)
+            {
+                return View("ProductNotFound", id);
+            }
             await InitializeSelectLists();
             return View(model);
         }
@@ -69,7 +73,7 @@ namespace NorthWeird.WebUI.Controllers
             if (ModelState.IsValid)
             {
 
-                var newProduct = await _productData.Update(model);
+                var newProduct = await _productData.UpdateAsync(model);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -81,8 +85,8 @@ namespace NorthWeird.WebUI.Controllers
 
         private async Task InitializeSelectLists()
         {
-            ViewBag.Categories = new SelectList(await _categoryData.GetAll(), nameof(Category.CategoryId), nameof(Category.CategoryName));
-            ViewBag.Suppliers = new SelectList(await _supplierData.GetAll(), nameof(Supplier.SupplierId), nameof(Supplier.CompanyName));
+            ViewBag.Categories = new SelectList(await _categoryData.GetAllAsync(), nameof(Category.CategoryId), nameof(Category.CategoryName));
+            ViewBag.Suppliers = new SelectList(await _supplierData.GetAllAsync(), nameof(Supplier.SupplierId), nameof(Supplier.CompanyName));
         }
     }
 }

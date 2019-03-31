@@ -6,6 +6,6 @@ namespace NorthWeird.Application.Interfaces
 {
     public interface ICategoryData
     {
-       Task<IEnumerable<Category>> GetAll();
+       Task<IEnumerable<Category>> GetAllAsync();
     }
 }

@@ -21,7 +21,7 @@ namespace NorthWeird.Application.Services
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
             var itemsToRead = _configuration.GetValue("ModelSettings:ProductsPerPage", 0);
             var products = _context.Products.Include(p => p.Category)
@@ -30,19 +30,19 @@ namespace NorthWeird.Application.Services
             return await (itemsToRead == 0 ? products : products.Take(itemsToRead)).ToListAsync(CancellationToken.None);
         }
 
-        public async Task<Product> Add(Product product)
+        public async Task<Product> AddAsync(Product product)
         {
              _context.Products.Add(product);
             await _context.SaveChangesAsync(CancellationToken.None);
             return product;
         }
 
-        public async Task<Product> Get(int id)
+        public async Task<Product> GetAsync(int id)
         {
             return await _context.Products.SingleOrDefaultAsync(p => p.ProductId == id, CancellationToken.None);
         }
 
-        public async Task<Product> Update(Product product)
+        public async Task<Product> UpdateAsync(Product product)
         {
             _context.Attach(product).State = EntityState.Modified;
 

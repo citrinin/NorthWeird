@@ -16,7 +16,7 @@ namespace NorthWeird.Application.Services
         {
             _context = context;
         }
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
             return await _context.Categories.ToListAsync(CancellationToken.None);
         }
