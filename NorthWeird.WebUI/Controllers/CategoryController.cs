@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NorthWeird.Application.Interfaces;
 using System.Threading.Tasks;
 using NorthWeird.Domain.Entities;
+using NorthWeird.WebUI.Filters;
 using NorthWeird.WebUI.ViewModel;
 
 namespace NorthWeird.WebUI.Controllers
@@ -21,6 +22,7 @@ namespace NorthWeird.WebUI.Controllers
             return View(await _categoryData.GetAllAsync());
         }
 
+        [TypeFilter(typeof(LoggingActionFilterAttribute), Arguments = new object[] { true })]
         public async Task<IActionResult> GetCategoryImage(int id)
         {
             var image = await _categoryData.GetImageByCategoryIdAsync(id);

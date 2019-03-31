@@ -12,6 +12,7 @@ using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Services;
 using NorthWeird.Application.Validation;
 using NorthWeird.Persistence;
+using NorthWeird.WebUI.Filters;
 using NorthWeird.WebUI.Middleware;
 
 namespace NorthWeird.WebUI
@@ -34,6 +35,8 @@ namespace NorthWeird.WebUI
             services.AddScoped<ICategoryData, SqlCategoryData>();
             services.AddScoped<ISupplierData, SqlSupplierData>();
 
+            //services.AddScoped<LoggingActionFilterAttribute>();
+
             _logger.LogInformation(string.Join(Environment.NewLine, _configuration.AsEnumerable().Select((k, v) => $"{k.Key} - {k.Value}")));
 
             services.AddMvc().AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<ProductValidator>());
@@ -53,8 +56,8 @@ namespace NorthWeird.WebUI
             app.UseImageCaching(new ImageCachingMiddlewareOptions
             {
                 ContentFolder = "D:\\test",
-                MaxCount = 3,
-                ExpirationTime = TimeSpan.FromMinutes(1)
+                MaxCount = 30,
+                ExpirationTime = TimeSpan.FromMinutes(3)
             });
 
 
