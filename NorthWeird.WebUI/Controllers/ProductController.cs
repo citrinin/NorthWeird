@@ -80,7 +80,6 @@ namespace NorthWeird.WebUI.Controllers
 
             await InitializeSelectLists();
             return View();
-
         }
 
         private async Task InitializeSelectLists()

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NorthWeird.Domain\NorthWeird.Domain.csproj" />
+    <ProjectReference Include="..\NorthWeird.Infrastructure\NorthWeird.Infrastructure.csproj" />
     <ProjectReference Include="..\NorthWeird.Persistence\NorthWeird.Persistence.csproj" />
   </ItemGroup>
 

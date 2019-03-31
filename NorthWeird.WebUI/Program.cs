@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
@@ -18,7 +19,7 @@ namespace NorthWeird.WebUI
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddProvider(new FileLoggerProvider(Path.Combine(Directory.GetCurrentDirectory(), "logger.log")));
+                    //logging.AddProvider(new FileLoggerProvider(Path.Combine(Directory.GetCurrentDirectory(), $"logger-{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.log")));
                 })
                 .UseStartup<Startup>();
     }

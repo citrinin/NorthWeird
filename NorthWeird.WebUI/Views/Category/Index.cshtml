@@ -1,12 +1,19 @@
 ﻿@model IEnumerable<NorthWeird.Domain.Entities.Category>
 
 @{
-    ViewBag.Title = "Categories";
+    ViewData["Title"] = "Categories";
 }
 
-<ul class="list-group">
+<div class="card-group">
     @foreach (var category in Model)
     {
-        <li class="list-group-item">@category.CategoryName</li>
+    <div class="card">
+        <img class="card-img-top image" src="@Url.Content($"/image/{category.CategoryId}")" alt="Category image">
+        <div class="card-body">
+            <h4 class="card-title">@category.CategoryName</h4>
+            <p class="card-text">@category.Description</p>
+        </div>
+        <a asp-action="Edit" asp-route-id="@category.CategoryId" class="btn btn-primary">Edit category</a>
+    </div>
     }
-</ul>
+</div>

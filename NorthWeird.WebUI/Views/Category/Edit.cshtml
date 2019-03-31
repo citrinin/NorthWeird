@@ -1,0 +1,43 @@
+﻿@model NorthWeird.WebUI.ViewModel.EditCategoryViewModel
+@{
+    ViewData["Title"] = "Edit category";
+}
+<form method="post" asp-controller="Category" asp-action="Edit" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Category.CategoryId" />
+
+    <div class="form-group">
+        <div class="row">
+            <span class="col-sm-2 col-form-label">Category Name</span>
+            <div class="col-sm-2">
+                <span>@Model.Category.CategoryName</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <span class="col-sm-2 col-form-label">Description</span>
+            <div class="col-sm-2">
+                <span>@Model.Category.Description</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="custom-file col-sm-4">
+                <input type="file" name="FormFile" class="custom-file-input" accept="image/*" asp-for="FormFile">
+                <label class="custom-file-label" asp-for="FormFile">Upload new image</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <img class="card-img-top image" src="@Url.Action("GetCategoryImage", new {id = Model.Category.CategoryId})" alt="Category image" height="150" width="200">
+    </div>
+
+
+    <input class="btn btn-primary" type="submit" name="update" value="Update" />
+    <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+</form>

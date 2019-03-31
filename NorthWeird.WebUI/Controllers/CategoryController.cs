@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using NorthWeird.Application.Interfaces;
 using System.Threading.Tasks;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using NorthWeird.Domain.Entities;
+using NorthWeird.WebUI.ViewModel;
 
 namespace NorthWeird.WebUI.Controllers
 {
@@ -14,10 +15,46 @@ namespace NorthWeird.WebUI.Controllers
         {
             _categoryData = categoryData;
         }
-        // GET: /<controller>/
+
         public async Task<IActionResult> Index()
         {
             return View(await _categoryData.GetAllAsync());
+        }
+
+        public async Task<IActionResult> GetCategoryImage(int id)
+        {
+            var image = await _categoryData.GetImageByCategoryIdAsync(id);
+
+            return File(image, "image/jpeg");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await _categoryData.GetAsync(id);
+            return model == null ? View("CategoryNotFound", id) : View(new EditCategoryViewModel{Category = model});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCategoryViewModel editCategory)
+        {
+            var files = HttpContext.Request.Form.Files;
+            if (ModelState.IsValid)
+            {
+                var categoryToUpdate = new Category {CategoryId = editCategory.Category.CategoryId};
+                using (var ms = new MemoryStream())
+                {
+                    await editCategory.FormFile.CopyToAsync(ms);
+                    categoryToUpdate.Picture = ms.GetBuffer();
+                }
+
+
+                var newCategory = await _categoryData.UpdateImageAsync(categoryToUpdate);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
         }
     }
 }

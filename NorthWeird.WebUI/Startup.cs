@@ -41,10 +41,12 @@ namespace NorthWeird.WebUI
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //}
+
+            app.UseStaticFiles();
 
             app.UseNodeModules(env.ContentRootPath);
 
@@ -54,6 +56,7 @@ namespace NorthWeird.WebUI
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
             routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("Image", "image/{id}", new {controller = "Category", action = "GetCategoryImage" });
         }
     }
 }
