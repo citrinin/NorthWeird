@@ -50,6 +50,14 @@ namespace NorthWeird.WebUI
 
             app.UseNodeModules(env.ContentRootPath);
 
+            app.UseImageCaching(new ImageCachingMiddlewareOptions
+            {
+                ContentFolder = "D:\\test",
+                MaxCount = 3,
+                ExpirationTime = TimeSpan.FromMinutes(1)
+            });
+
+
             app.UseMvc(ConfigureRoutes);
         }
 

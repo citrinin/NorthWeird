@@ -34,7 +34,7 @@
     </div>
 
     <div class="row">
-        <img class="card-img-top image" src="@Url.Action("GetCategoryImage", new {id = Model.Category.CategoryId})" alt="Category image" height="150" width="200">
+        <img class="card-img-top image" src="@Url.Content($"/image/{Model.Category.CategoryId}")" alt="Category image" height="150" width="200">
     </div>
 
 

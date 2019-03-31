@@ -18,5 +18,12 @@ namespace NorthWeird.WebUI.Middleware
             app.UseStaticFiles(options);
             return app;
         }
+
+        public static IApplicationBuilder UseImageCaching(this IApplicationBuilder app,
+            ImageCachingMiddlewareOptions options)
+        {
+            app.UseMiddleware<ImageCachingMiddleware>(options);
+            return app;
+        }
     }
 }
