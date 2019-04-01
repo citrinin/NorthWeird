@@ -42,62 +42,54 @@ namespace NorthWeird.WebUI.Middleware
             }
 
             _lastRequestTime = currentTime;
-            try
+
+            if (_filePaths.ContainsKey(context.Request.Path) && File.Exists(Path.Combine(_path, context.Request.Path)))
             {
-                if (_filePaths.ContainsKey(context.Request.Path) && File.Exists(context.Request.Path))
+                using (var file = new FileStream(_filePaths[context.Request.Path], FileMode.Open, FileAccess.Read))
                 {
-                    using (var file = new FileStream(_filePaths[context.Request.Path], FileMode.Open, FileAccess.Read))
-                    {
-                        await file.CopyToAsync(originalBody, (int) file.Length);
-                        context.Response.ContentType = "image/jpeg";
-                    }
-
+                    await file.CopyToAsync(originalBody, (int) file.Length);
+                    context.Response.ContentType = "image/jpeg";
                 }
-                else
+            }
+            else
+            {
+                if (_filePaths.ContainsKey(context.Request.Path) && !File.Exists(Path.Combine(_path, context.Request.Path)))
                 {
-                    if (_filePaths.ContainsKey(context.Request.Path))
+                    _filePaths.Remove(context.Request.Path, out var val);
+                }
+
+
+                using (var memStream = new MemoryStream())
+                {
+                    context.Response.Body = memStream;
+
+                    await _next(context);
+
+                    if (string.Equals(context.Response.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase))
                     {
-                        _filePaths.Remove(context.Request.Path, out var val);
-                    }
+                        var filename = Path.Combine(_path, $"{Guid.NewGuid().ToString()}.jpeg");
 
-
-                    using (var memStream = new MemoryStream())
-                    {
-                        context.Response.Body = memStream;
-
-                        await _next(context);
-
-
-                        memStream.Position = 0;
-
-                        if (string.Equals(context.Response.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase))
+                        using (var file = new FileStream(filename, FileMode.Create, FileAccess.Write))
                         {
-                            var filename = Path.Combine(_path, $"{Guid.NewGuid().ToString()}.jpeg");
-
-                            using (var file = new FileStream(filename, FileMode.Create, FileAccess.Write))
-                            {
-                                await memStream.CopyToAsync(file, (int)memStream.Length);
-                            }
-
-                            if (_filePaths.Count >= _maxCachedItems)
-                            {
-                                var firstItem = _filePaths.First();
-                                _filePaths.Remove(firstItem.Key, out var val);
-                                File.Delete(firstItem.Value);
-                            }
-
-                            _filePaths.TryAdd(context.Request.Path, filename);
+                            memStream.Position = 0;
+                            await memStream.CopyToAsync(file, (int)memStream.Length);
                         }
 
-                        memStream.Position = 0;
-                        await memStream.CopyToAsync(originalBody);
+                        if (_filePaths.Count >= _maxCachedItems)
+                        {
+                            var firstItem = _filePaths.First();
+                            _filePaths.Remove(firstItem.Key, out var val);
+                            File.Delete(firstItem.Value);
+                        }
+
+                        _filePaths.TryAdd(context.Request.Path, filename);
                     }
+
+                    memStream.Position = 0;
+                    await memStream.CopyToAsync(originalBody);
                 }
             }
-            finally
-            {
-                context.Response.Body = originalBody;
-            }
+ 
         }
     }
 }
