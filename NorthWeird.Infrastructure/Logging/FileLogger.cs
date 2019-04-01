@@ -8,7 +8,7 @@ namespace NorthWeird.Infrastructure.Logging
     public class FileLogger : ILogger
     {
         private readonly string _filePath;
-        private readonly object _lock = new object();
+        private static readonly object _lock = new object();
 
         public FileLogger(string path)
         {
