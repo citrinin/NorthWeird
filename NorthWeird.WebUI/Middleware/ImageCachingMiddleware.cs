@@ -14,8 +14,6 @@ namespace NorthWeird.WebUI.Middleware
         private readonly string _path;
         private readonly int _maxCachedItems;
         private readonly TimeSpan _maxLifeTime;
-        private DateTime _lastRequestTime;
-        private readonly ConcurrentDictionary<string, string> _filePaths;
 
         public ImageCachingMiddleware(RequestDelegate next, ImageCachingMiddlewareOptions options)
         {
@@ -23,66 +21,52 @@ namespace NorthWeird.WebUI.Middleware
             _path = options.ContentFolder;
             _maxCachedItems = options.MaxCount;
             _maxLifeTime = options.ExpirationTime;
-            _filePaths = new ConcurrentDictionary<string, string>();
-            _lastRequestTime = DateTime.Now;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var originalBody = context.Response.Body;
-            var currentTime = DateTime.Now;
+            
+            var fileName = Path.Combine(_path, $"{context.Request.Path.ToString().Replace("/","")}.jpeg");
 
-            if (currentTime - _lastRequestTime > _maxLifeTime)
+            if (File.Exists(fileName))
             {
-                _filePaths.Clear();
-                foreach (var file in Directory.EnumerateFiles(_path))
+                using (var file = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                 {
-                    File.Delete(file);
-                }
-            }
-
-            _lastRequestTime = currentTime;
-
-            if (_filePaths.ContainsKey(context.Request.Path) && File.Exists(Path.Combine(_path, context.Request.Path)))
-            {
-                using (var file = new FileStream(_filePaths[context.Request.Path], FileMode.Open, FileAccess.Read))
-                {
-                    await file.CopyToAsync(originalBody, (int) file.Length);
+                    await file.CopyToAsync(context.Response.Body, (int) file.Length);
                     context.Response.ContentType = "image/jpeg";
                 }
             }
             else
             {
-                if (_filePaths.ContainsKey(context.Request.Path) && !File.Exists(Path.Combine(_path, context.Request.Path)))
-                {
-                    _filePaths.Remove(context.Request.Path, out var val);
-                }
-
-
                 using (var memStream = new MemoryStream())
                 {
+                    var originalBody = context.Response.Body;
                     context.Response.Body = memStream;
 
                     await _next(context);
 
                     if (string.Equals(context.Response.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase))
                     {
-                        var filename = Path.Combine(_path, $"{Guid.NewGuid().ToString()}.jpeg");
 
-                        using (var file = new FileStream(filename, FileMode.Create, FileAccess.Write))
+                        using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
                         {
                             memStream.Position = 0;
                             await memStream.CopyToAsync(file, (int)memStream.Length);
                         }
 
-                        if (_filePaths.Count >= _maxCachedItems)
+                        var filesInDirectory = Directory.EnumerateFiles(_path).OrderBy(File.GetCreationTime).ToList();
+                        var filesToDelete = filesInDirectory.Where(f => DateTime.Now - File.GetCreationTime(f) > _maxLifeTime);
+
+                        foreach (var file in filesToDelete)
                         {
-                            var firstItem = _filePaths.First();
-                            _filePaths.Remove(firstItem.Key, out var val);
-                            File.Delete(firstItem.Value);
+                            File.Delete(file);
                         }
 
-                        _filePaths.TryAdd(context.Request.Path, filename);
+                        if (filesInDirectory.Count() >= _maxCachedItems)
+                        {
+                            var fileToDelete = filesInDirectory.FirstOrDefault();
+                            File.Delete(fileToDelete);
+                        }
                     }
 
                     memStream.Position = 0;
