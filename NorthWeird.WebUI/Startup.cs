@@ -56,7 +56,7 @@ namespace NorthWeird.WebUI
             app.UseImageCaching(new ImageCachingMiddlewareOptions
             {
                 ContentFolder = "D:\\test",
-                MaxCount = 30,
+                MaxCount = 10,
                 ExpirationTime = TimeSpan.FromMinutes(3)
             });
 

@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Edit category";
 }
+
 <form method="post" asp-controller="Category" asp-action="Edit" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <input type="hidden" asp-for="Category.CategoryId" />
@@ -36,7 +37,6 @@
     <div class="row">
         <img class="card-img-top image" src="@Url.Content($"/image/{Model.Category.CategoryId}")" alt="Category image" height="150" width="200">
     </div>
-
 
     <input class="btn btn-primary" type="submit" name="update" value="Update" />
     <a class="btn btn-secondary" asp-action="Index">Cancel</a>
