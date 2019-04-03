@@ -7,13 +7,17 @@
 <div class="card-group">
     @foreach (var category in Model)
     {
-    <div class="card">
-        <img class="card-img-top image" src="@Url.Content($"/image/{category.CategoryId}")" alt="Category image">
-        <div class="card-body">
-            <h4 class="card-title">@category.CategoryName</h4>
-            <p class="card-text">@category.Description</p>
+        <div class="card">
+            <img class="card-img-top image" src="@Url.Content($"/image/{category.CategoryId}")" alt="Category image">
+            <div class="card-body">
+                <h4 class="card-title">@category.CategoryName</h4>
+                <p class="card-text">@category.Description</p>
+            </div>
+            <a asp-action="Edit" asp-route-id="@category.CategoryId" class="btn btn-primary">Edit category</a>
         </div>
-        <a asp-action="Edit" asp-route-id="@category.CategoryId" class="btn btn-primary">Edit category</a>
-    </div>
     }
 </div>
+
+@section Footer {
+    <span>I'm very sorry, but you can't edit the categories :'(</span>
+}

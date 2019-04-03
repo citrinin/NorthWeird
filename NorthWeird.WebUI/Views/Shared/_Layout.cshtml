@@ -5,36 +5,55 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["Title"]</title>
     <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/styles.css" rel="stylesheet" />
+    <link href="~/styles/styles.css" rel="stylesheet" />
 </head>
-    <body>
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">NorthWeird</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Product" asp-action="Index">Products</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div class="container-fluid px-5">
-                <h2 class="my-4">@ViewData["Title"]</h2>
-                <div>
-                    @RenderBody()
-                </div>
+    <body class="d-flex flex-column">
+       @RenderSection("Header", false)
+
+        @if (!IsSectionDefined("header"))
+        {
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand" href="#">NorthWeird</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Product" asp-action="Index">Products</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+        }
+
+        <main role="main" class="container-fluid px-5">
+            <h2 class="my-4">@ViewData["Title"]</h2>
+            <div>
+                @RenderBody()
             </div>
-        </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container text-muted">
+                @RenderSection("footer", false)
+                @if (!IsSectionDefined("header"))
+                {
+                    <div>
+                        This is the project for <a href="https://epam.sharepoint.com/sites/ASPNetCore">mentorin gprogram.</a>
+                        Link on <a href="https://github.com/Citrinin/NorthWeird"> GitHub </a>
+                    </div>
+                }
+            </div>
+        </footer>
         <script src="~/node_modules/jquery/dist/jquery.js"></script>
         <script src="~/node_modules/jquery-validation/dist/jquery.validate.js"></script>
         <script src="~/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
