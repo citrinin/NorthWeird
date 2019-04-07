@@ -1,0 +1,16 @@
+﻿<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        @if (string.Equals(ViewData["actionName"],"Index"))
+        {
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["controllerName"]</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item">
+                <a asp-controller="@ViewData["controllerName"]" asp-action="Index">@ViewData["controllerName"]</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["actionName"]</li>
+        }
+    </ol>
+</nav>

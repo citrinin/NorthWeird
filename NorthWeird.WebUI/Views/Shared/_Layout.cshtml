@@ -10,7 +10,7 @@
     <body class="d-flex flex-column">
        @RenderSection("Header", false)
 
-        @if (!IsSectionDefined("header"))
+    @if (!IsSectionDefined("header"))
         {
             <header>
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -34,8 +34,10 @@
                 </nav>
             </header>
         }
+        
+    @await Component.InvokeAsync("Breadcrumb")
 
-        <main role="main" class="container-fluid px-5">
+    <main role="main" class="container-fluid px-5">
             <h2 class="my-4">@ViewData["Title"]</h2>
             <div>
                 @RenderBody()

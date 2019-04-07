@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-      <HintPath>C:\Users\Katsiaryna_Kuzkina\.nuget\packages\microsoft.extensions.logging.abstractions\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <HintPath>C:\Users\Kate\.nuget\packages\microsoft.extensions.logging.abstractions\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
 
