@@ -22,6 +22,13 @@ body {
 }
 
 .carousel {
-    width:640px;
-    height:360px;
+    width: 640px;
+    height: 450px;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.home-content {
+    margin: auto;
+    text-align: center;
 }
