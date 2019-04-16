@@ -13,6 +13,7 @@ namespace NorthWeird.WebApi
     public class Startup
     {
         private IConfiguration _configuration;
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -29,6 +30,15 @@ namespace NorthWeird.WebApi
             services.AddScoped<ICategoryData, SqlCategoryData>();
             services.AddScoped<ISupplierData, SqlSupplierData>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000");
+                    });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -40,6 +50,7 @@ namespace NorthWeird.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
             app.UseMvc(config =>
             {

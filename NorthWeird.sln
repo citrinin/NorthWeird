@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.Application.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.WebUI.Tests", "NorthWeird.WebUI.Tests\NorthWeird.WebUI.Tests.csproj", "{14931069-547A-4B5B-A143-4BFE98C487F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWeird.WebApi", "NorthWeird.WebApi\NorthWeird.WebApi.csproj", "{C4339C2E-8C16-4AF4-A36A-07B0346CB32D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.WebApi", "NorthWeird.WebApi\NorthWeird.WebApi.csproj", "{C4339C2E-8C16-4AF4-A36A-07B0346CB32D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
