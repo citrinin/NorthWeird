@@ -12,6 +12,10 @@ namespace NorthWeird.Application.Interfaces
 
         Task<Product> GetAsync(int id);
 
+        Task<Product> GetWithCategoryAsync(int id);
+
         Task<Product> UpdateAsync(Product product);
+
+        Task<IEnumerable<Product>> GetPageAsync(int itemsPerPage, int pageNumber);
     }
 }

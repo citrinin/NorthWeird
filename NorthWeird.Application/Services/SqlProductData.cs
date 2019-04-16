@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,6 +31,19 @@ namespace NorthWeird.Application.Services
             return await (itemsToRead == 0 ? products : products.Take(itemsToRead)).ToListAsync(CancellationToken.None);
         }
 
+        public async Task<IEnumerable<Product>> GetPageAsync(int itemsPerPage, int pageNumber)
+        {
+            if (itemsPerPage <=0 || pageNumber<= 0)
+            {
+                throw new ArgumentException("Incorrect page number");
+            }
+
+            var products = _context.Products.Include(p => p.Category)
+                .Include(p => p.Supplier);
+
+            return await products.Skip(itemsPerPage * pageNumber).Take(itemsPerPage).ToListAsync(CancellationToken.None);
+        }
+
         public async Task<Product> AddAsync(Product product)
         {
              _context.Products.Add(product);
@@ -48,6 +62,13 @@ namespace NorthWeird.Application.Services
 
             await _context.SaveChangesAsync(CancellationToken.None);
             return product;
+        }
+
+        public Task<Product> GetWithCategoryAsync(int id)
+        {
+            return _context.Products
+                .Include(p => p.Category)
+                .SingleOrDefaultAsync(p => p.ProductId == id, CancellationToken.None);
         }
     }
 }
