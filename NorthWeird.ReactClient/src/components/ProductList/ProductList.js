@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
 import Product from './components/Product';
+import Spinner from '../Spinner/Spinner';
 
-let isLoading = false;
 class ProductList extends Component {
   state = {
-    products: []
+    products: [],
+    isLoading: true
   }
 
   componentDidMount() {
-    isLoading = true;
     fetch('http://localhost:52370/api/products/')
       .then(response => response.json())
       .then(data => {
         this.setState({ products: data })
       })
-      .finally(_ => isLoading = false);
+      .finally(_ => this.setState({ isLoading: false }));
   }
   render() {
     return (
       <div className="ProductList">
         {
-          isLoading
-            ? <table className="table">
+          this.state.isLoading
+            ? <Spinner />
+            : <table className="table">
               <thead>
                 <tr>
                   <th>Product name</th>
@@ -35,7 +36,6 @@ class ProductList extends Component {
                 }
               </tbody>
             </table>
-            : <img src="https://i0.wp.com/media.boingboing.net/wp-content/uploads/2015/10/tumblr_nlohpxGdBi1tlivlxo1_12801.gif?w=500" alt="spinner" />
         }
 
       </div>

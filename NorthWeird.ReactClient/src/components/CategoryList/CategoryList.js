@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Category from './components/Category';
+import Spinner from '../Spinner/Spinner';
 
 class CategoryList extends Component {
   state = {
-    categories: []
+    categories: [],
+    isLoading: true
   }
 
   componentDidMount() {
@@ -11,24 +13,30 @@ class CategoryList extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ categories: data })
-      });
+      })
+      .finally(_ => this.setState({ isLoading: false }));
   }
   render() {
     return (
       <div className="CategoryList">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Category name</th>
-              <th>Category description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.state.categories.map(category => <Category key={category.categoryId} category={category} />)
-            }
-          </tbody>
-        </table>
+        {
+          this.state.isLoading
+            ? <Spinner />
+            : <table className="table">
+              <thead>
+                <tr>
+                  <th>Category name</th>
+                  <th>Category description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  this.state.categories.map(category => <Category key={category.categoryId} category={category} />)
+                }
+              </tbody>
+            </table>
+        }
+
       </div>
     );
   }
