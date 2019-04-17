@@ -70,5 +70,11 @@ namespace NorthWeird.Application.Services
                 .Include(p => p.Category)
                 .SingleOrDefaultAsync(p => p.ProductId == id, CancellationToken.None);
         }
+
+        public async Task DeleteAsync(Product productToDelete)
+        {
+            _context.Products.Remove(productToDelete);
+            await _context.SaveChangesAsync(CancellationToken.None);
+        }
     }
 }

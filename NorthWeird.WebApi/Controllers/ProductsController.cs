@@ -23,7 +23,7 @@ namespace NorthWeird.WebApi.Controllers
             return Ok(await _productData.GetAllAsync());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "ProductGet")]
         public async Task<IActionResult> Get(int id, bool includeCategory = false)
         {
             try
@@ -43,6 +43,67 @@ namespace NorthWeird.WebApi.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]Product product)
+        {
+            try
+            {
+                await _productData.AddAsync(product);
+                var newUri = Url.Link("ProductGet",new {id = product.ProductId});
+                return Created(newUri, product);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Product product)
+        {
+            try
+            {
+                //var oldProduct = await _productData.GetAsync(id);
+                //if (oldProduct == null)
+                //{
+                //    return NotFound($"Could not find a product with id {id}");
+                //}
+
+                await _productData.UpdateAsync(product);
+                return Ok(product);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return BadRequest("Couldn't update product");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var oldProduct = await _productData.GetAsync(id);
+                if (oldProduct == null)
+                {
+                    return NotFound($"Could not find a product with id {id}");
+                }
+
+                await _productData.DeleteAsync(oldProduct);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return BadRequest("Couldn't update product");
         }
     }
 }
