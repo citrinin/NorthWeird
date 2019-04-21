@@ -12,7 +12,7 @@ namespace NorthWeird.WebApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private ICategoryData _categoryData;
+        private readonly ICategoryData _categoryData;
 
         public CategoriesController(ICategoryData categoryData)
         {

@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Services;
 using NorthWeird.Persistence;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthWeird.WebApi
 {
@@ -39,12 +40,27 @@ namespace NorthWeird.WebApi
                     });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
+                //.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "NorthWeird API", Version = "v1" });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "NorthWeird.WebApi.xml");
+                c.IncludeXmlComments(filePath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NorthWeird API V1");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -52,6 +68,7 @@ namespace NorthWeird.WebApi
 
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
+
             app.UseMvc(config =>
             {
                 config.MapRoute("NorthWeird", "api/{controller}/{action}");
