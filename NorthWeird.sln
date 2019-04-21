@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.WebUI", "NorthWeird.WebUI\NorthWeird.WebUI.csproj", "{76CA174B-2188-4833-A3E5-D3A972AA3B8C}"
 EndProject
@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.WebUI.Tests", "N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.WebApi", "NorthWeird.WebApi\NorthWeird.WebApi.csproj", "{C4339C2E-8C16-4AF4-A36A-07B0346CB32D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWeird.WebConsole", "NorthWeird.WebConsole\NorthWeird.WebConsole.csproj", "{8870407B-77A7-4E88-8F01-B68D8970AA28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWeird.WebConsole", "NorthWeird.WebConsole\NorthWeird.WebConsole.csproj", "{8870407B-77A7-4E88-8F01-B68D8970AA28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWeird.WebApi.Tests", "NorthWeird.WebApi.Tests\NorthWeird.WebApi.Tests.csproj", "{A72A75C1-5A47-47F1-8CD2-46A5921EB75B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{8870407B-77A7-4E88-8F01-B68D8970AA28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8870407B-77A7-4E88-8F01-B68D8970AA28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8870407B-77A7-4E88-8F01-B68D8970AA28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A72A75C1-5A47-47F1-8CD2-46A5921EB75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A72A75C1-5A47-47F1-8CD2-46A5921EB75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A72A75C1-5A47-47F1-8CD2-46A5921EB75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A72A75C1-5A47-47F1-8CD2-46A5921EB75B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{14931069-547A-4B5B-A143-4BFE98C487F9} = {16478D18-C1FB-4808-91BC-6486B6BBFF25}
 		{C4339C2E-8C16-4AF4-A36A-07B0346CB32D} = {BF60F272-646A-4C0B-AC19-D8F37DBFF6A6}
 		{8870407B-77A7-4E88-8F01-B68D8970AA28} = {BF60F272-646A-4C0B-AC19-D8F37DBFF6A6}
+		{A72A75C1-5A47-47F1-8CD2-46A5921EB75B} = {16478D18-C1FB-4808-91BC-6486B6BBFF25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75ABECF3-0361-4E29-9C6D-017960EB791F}

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NorthWeird.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:NorthWeird.WebApi.Controllers.ProductsController">
+            <inheritdoc />
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.#ctor(NorthWeird.Application.Interfaces.IProductData)">
+            <inheritdoc />
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Get">
+            <summary>
+            Retrieves a product list that contains full list of products
+            </summary>
+            <response code="200">Product list successfully obtained</response>
+            <response code="500">Oops! Some problems with server</response>
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Get(System.Int32,System.Boolean)">
+            <summary>
+            Retrieves a specific product by unique id
+            </summary>
+            <param name="id">Id of the product</param>
+            <param name="includeCategory">flag for including category into product object</param>
+            <response code="200">Product with such id was found</response>
+            <response code="404">Product with such id was not found</response>
+            <response code="500">Oops! Some problems with server</response>
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Post(NorthWeird.Domain.Entities.Product)">
+            <summary>
+            Creates product from request body
+            </summary>
+            <param name="product">Product that needs to be created</param>
+            <response code="200">Product was created</response>
+            <response code="500">Oops! Some problems with server</response>
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Put(System.Int32,NorthWeird.Domain.Entities.Product)">
+            <summary>
+            Updates product from request body
+            </summary>
+            <param name="id">id of the product that needs to be updated</param>
+            <param name="product">Product that needs to be updated</param>
+            <response code="200">Product was updated</response>
+            <response code="500">Oops! Some problems with server</response>
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Delete(System.Int32)">
+            <summary>
+            Deletes product from request body
+            </summary>
+            <param name="id">id of the product that needs to be deleted</param>
+            <response code="200">Product was deleted</response>
+            <response code="404">Product with such id was not found</response>
+            <response code="500">Oops! Some problems with server</response>
+        </member>
+    </members>
+</doc>
