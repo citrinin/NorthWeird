@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NorthWeird.Application.Interfaces;
 using NorthWeird.Domain.Entities;
 
@@ -11,11 +12,15 @@ namespace NorthWeird.WebApi.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductData _productData;
+        private readonly ICategoryData _categoryData;
+        private readonly ILogger _logger;
 
         /// <inheritdoc />
-        public ProductsController(IProductData productData)
+        public ProductsController(IProductData productData, ICategoryData categoryData, ILogger logger)
         {
             _productData = productData;
+            _categoryData = categoryData;
+            _logger = logger;
         }
 
         /// <summary>
@@ -42,7 +47,11 @@ namespace NorthWeird.WebApi.Controllers
         {
             try
             {
-                var product = includeCategory ? await _productData.GetWithCategoryAsync(id) : await _productData.GetAsync(id);
+                var product = await _productData.GetAsync(id);
+                if (includeCategory)
+                {
+                    product.Category = await _categoryData.GetAsync(product.CategoryId);
+                }
 
                 if (product == null)
                 {
@@ -53,6 +62,7 @@ namespace NorthWeird.WebApi.Controllers
             }
             catch
             {
+                _logger.LogError($"Exception was thrown while getting product with id {id}");
             }
 
             return BadRequest();
@@ -136,7 +146,7 @@ namespace NorthWeird.WebApi.Controllers
 
             }
 
-            return BadRequest("Couldn't update product");
+            return BadRequest("Couldn't delete product");
         }
     }
 }

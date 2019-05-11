@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NorthWeird.Application.Interfaces;
+using NorthWeird.Application.Models;
 using NorthWeird.Domain.Entities;
 using NorthWeird.Persistence;
 
@@ -15,60 +17,69 @@ namespace NorthWeird.Application.Services
     {
         private readonly IConfiguration _configuration;
         private readonly NorthWeirdDbContext _context;
+        private readonly IMapper _mapper;
 
-        public SqlProductData(NorthWeirdDbContext context, IConfiguration configuration)
+        public SqlProductData(
+            NorthWeirdDbContext context,
+            IConfiguration configuration,
+            IMapper mapper
+            )
         {
             _context = context;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
             var itemsToRead = _configuration.GetValue("ModelSettings:ProductsPerPage", 0);
-            var products = _context.Products.Include(p => p.Category)
+            var products = _context.Products
+                .Include(p => p.Category)
                 .Include(p => p.Supplier);
 
-            return await (itemsToRead == 0 ? products : products.Take(itemsToRead)).ToListAsync(CancellationToken.None);
+            var resultProducts = await (itemsToRead == 0 ? products : products.Take(itemsToRead))
+                .ToListAsync(CancellationToken.None);
+
+            return _mapper.Map<IEnumerable<ProductDto>>(resultProducts);
         }
 
-        public async Task<IEnumerable<Product>> GetPageAsync(int itemsPerPage, int pageNumber)
+        public async Task<IEnumerable<ProductDto>> GetPageAsync(int itemsPerPage, int pageNumber)
         {
             if (itemsPerPage <=0 || pageNumber<= 0)
             {
                 throw new ArgumentException("Incorrect page number");
             }
 
-            var products = _context.Products.Include(p => p.Category)
+            var products = _context.Products
+                .Include(p => p.Category)
                 .Include(p => p.Supplier);
 
-            return await products.Skip(itemsPerPage * pageNumber).Take(itemsPerPage).ToListAsync(CancellationToken.None);
+            var resultProducts = await products
+                .Skip(itemsPerPage * pageNumber)
+                .Take(itemsPerPage)
+                .ToListAsync(CancellationToken.None);
+
+            return _mapper.Map<IEnumerable<ProductDto>>(resultProducts);
         }
 
-        public async Task<Product> AddAsync(Product product)
+        public async Task<ProductDto> AddAsync(Product product)
         {
              _context.Products.Add(product);
             await _context.SaveChangesAsync(CancellationToken.None);
-            return product;
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<Product> GetAsync(int id)
+        public async Task<ProductDto> GetAsync(int id)
         {
             return await _context.Products.SingleOrDefaultAsync(p => p.ProductId == id, CancellationToken.None);
         }
 
-        public async Task<Product> UpdateAsync(Product product)
+        public async Task<ProductDto> UpdateAsync(Product product)
         {
             _context.Attach(product).State = EntityState.Modified;
 
             await _context.SaveChangesAsync(CancellationToken.None);
             return product;
-        }
-
-        public Task<Product> GetWithCategoryAsync(int id)
-        {
-            return _context.Products
-                .Include(p => p.Category)
-                .SingleOrDefaultAsync(p => p.ProductId == id, CancellationToken.None);
         }
 
         public async Task DeleteAsync(Product productToDelete)

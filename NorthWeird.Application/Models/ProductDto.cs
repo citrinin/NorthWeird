@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NorthWeird.Application.Models
+﻿namespace NorthWeird.Application.Models
 {
     public class ProductDto
     {
@@ -29,5 +25,7 @@ namespace NorthWeird.Application.Models
         public string CategoryName { get; set; }
 
         public string SupplierName { get; set; }
+
+        public CategoryDto Category { get; set; }
     }
 }

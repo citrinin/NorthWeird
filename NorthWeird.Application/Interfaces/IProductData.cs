@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using NorthWeird.Application.Models;
 using NorthWeird.Domain.Entities;
 
 namespace NorthWeird.Application.Interfaces
 {
     public interface IProductData
     {
-        Task<IEnumerable<Product>> GetAllAsync();
+        Task<IEnumerable<ProductDto>> GetAllAsync();
 
-        Task<Product> AddAsync(Product product);
+        Task<ProductDto> AddAsync(Product product);
 
-        Task<Product> GetAsync(int id);
+        Task<ProductDto> GetAsync(int id);
 
-        Task<Product> GetWithCategoryAsync(int id);
+        Task<ProductDto> GetWithCategoryAsync(int id);
 
-        Task<Product> UpdateAsync(Product product);
+        Task<ProductDto> UpdateAsync(Product product);
 
-        Task<IEnumerable<Product>> GetPageAsync(int itemsPerPage, int pageNumber);
+        Task<IEnumerable<ProductDto>> GetPageAsync(int itemsPerPage, int pageNumber);
 
         Task DeleteAsync(Product productToDelete);
     }

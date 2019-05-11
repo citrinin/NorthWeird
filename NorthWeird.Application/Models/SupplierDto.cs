@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NorthWeird.Application.Models
+﻿namespace NorthWeird.Application.Models
 {
-    class SupplierDto
+    public class SupplierDto
     {
         public int SupplierId { get; set; }
 
