@@ -62,8 +62,9 @@ namespace NorthWeird.Application.Services
             return _mapper.Map<IEnumerable<ProductDto>>(resultProducts);
         }
 
-        public async Task<ProductDto> AddAsync(Product product)
+        public async Task<ProductDto> AddAsync(ProductDto productToAdd)
         {
+            var product = _mapper.Map<Product>(productToAdd);
              _context.Products.Add(product);
             await _context.SaveChangesAsync(CancellationToken.None);
             return _mapper.Map<ProductDto>(product);
@@ -71,20 +72,22 @@ namespace NorthWeird.Application.Services
 
         public async Task<ProductDto> GetAsync(int id)
         {
-            return await _context.Products.SingleOrDefaultAsync(p => p.ProductId == id, CancellationToken.None);
+            var resultProduct = await _context.Products.SingleOrDefaultAsync(p => p.ProductId == id, CancellationToken.None);
+            return _mapper.Map<ProductDto>(resultProduct);
         }
 
-        public async Task<ProductDto> UpdateAsync(Product product)
+        public async Task<ProductDto> UpdateAsync(ProductDto productToUpdate)
         {
+            var product = _mapper.Map<Product>(productToUpdate);
             _context.Attach(product).State = EntityState.Modified;
 
             await _context.SaveChangesAsync(CancellationToken.None);
-            return product;
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task DeleteAsync(Product productToDelete)
+        public async Task DeleteAsync(ProductDto productToDelete)
         {
-            _context.Products.Remove(productToDelete);
+            _context.Products.Remove(_mapper.Map<Product>(productToDelete));
             await _context.SaveChangesAsync(CancellationToken.None);
         }
     }

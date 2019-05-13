@@ -25,7 +25,5 @@
         public string CategoryName { get; set; }
 
         public string SupplierName { get; set; }
-
-        public CategoryDto Category { get; set; }
     }
 }

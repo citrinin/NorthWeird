@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using NorthWeird.Application.Mapping;
 using NorthWeird.Application.Services;
 using NorthWeird.Application.Tests.Infrastructure;
 using NorthWeird.Persistence;
@@ -10,11 +12,13 @@ namespace NorthWeird.Application.Tests.Services
     public class SqlSupplierDataTest
     {
         private NorthWeirdDbContext _context;
+        private IMapper _mapper;
 
         [SetUp]
         public void Setup()
         {
             _context = NorthWeirdDbContextFactory.Create();
+            _mapper = new MapperConfiguration(c => c.AddMaps(typeof(ProductMappingProfile))).CreateMapper();
         }
 
         [TearDown]
@@ -26,7 +30,7 @@ namespace NorthWeird.Application.Tests.Services
         [Test]
         public async Task GetAllAsync_ShouldReturnAllRecords()
         {
-            var service = new SqlSupplierData(_context);
+            var service = new SqlSupplierData(_context, _mapper);
             var suppliers = await service.GetAllAsync();
             Assert.AreEqual(3, suppliers.Count());
         }

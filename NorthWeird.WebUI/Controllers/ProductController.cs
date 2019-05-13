@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NorthWeird.Application.Interfaces;
+using NorthWeird.Application.Models;
 using NorthWeird.Domain.Entities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -38,7 +39,7 @@ namespace NorthWeird.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product model)
+        public async Task<IActionResult> Create(ProductDto model)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +69,7 @@ namespace NorthWeird.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Product model)
+        public async Task<IActionResult> Edit(ProductDto model)
         {
             if (ModelState.IsValid)
             {

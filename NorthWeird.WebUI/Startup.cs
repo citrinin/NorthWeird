@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NorthWeird.Application.Interfaces;
+using NorthWeird.Application.Mapping;
 using NorthWeird.Application.Services;
 using NorthWeird.Application.Validation;
 using NorthWeird.Persistence;
@@ -21,10 +24,13 @@ namespace NorthWeird.WebUI
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        private readonly IHostingEnvironment _environment;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger, IHostingEnvironment env)
         {
             _configuration = configuration;
             _logger = logger;
+            _environment = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -40,6 +46,13 @@ namespace NorthWeird.WebUI
             _logger.LogInformation(string.Join(Environment.NewLine, _configuration.AsEnumerable().Select((k, v) => $"{k.Key} - {k.Value}")));
 
             services.AddMvc().AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<ProductValidator>());
+            services.AddAutoMapper(typeof(ProductMappingProfile));
+
+
+            if (!_environment.IsDevelopment())
+            {
+                services.Configure<MvcOptions>(o => o.Filters.Add(new RequireHttpsAttribute()));
+            }
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

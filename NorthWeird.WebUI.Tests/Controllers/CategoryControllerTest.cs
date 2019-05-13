@@ -7,6 +7,7 @@ using NorthWeird.Application.Interfaces;
 using NorthWeird.Domain.Entities;
 using Xunit;
 using NorthWeird.WebUI.Controllers;
+using NorthWeird.Application.Models;
 
 namespace NorthWeird.WebUI.Tests.Controllers
 {
@@ -18,11 +19,11 @@ namespace NorthWeird.WebUI.Tests.Controllers
         {
             var mockCategory = new Mock<ICategoryData>();
             mockCategory.Setup(service => service.GetAllAsync())
-                .ReturnsAsync(new List<Category>
+                .ReturnsAsync(new List<CategoryDto>
                 {
-                    new Category { CategoryId = 1, CategoryName = "Fish" },
-                    new Category { CategoryId = 2, CategoryName = "Meat" },
-                    new Category { CategoryId = 3, CategoryName = "Vegetables" }
+                    new CategoryDto { CategoryId = 1, CategoryName = "Fish" },
+                    new CategoryDto { CategoryId = 2, CategoryName = "Meat" },
+                    new CategoryDto { CategoryId = 3, CategoryName = "Vegetables" }
                 });
 
             _categoryService = mockCategory.Object;
@@ -36,7 +37,7 @@ namespace NorthWeird.WebUI.Tests.Controllers
             var result = await controller.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Category>>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<IEnumerable<CategoryDto>>(viewResult.ViewData.Model);
             Assert.Equal(3, model.Count());
         }
     }

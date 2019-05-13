@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NorthWeird.Application.Interfaces;
+using NorthWeird.Application.Models;
 using NorthWeird.Domain.Entities;
 
 namespace NorthWeird.WebApi.Controllers
@@ -16,7 +17,7 @@ namespace NorthWeird.WebApi.Controllers
         private readonly ILogger _logger;
 
         /// <inheritdoc />
-        public ProductsController(IProductData productData, ICategoryData categoryData, ILogger logger)
+        public ProductsController(IProductData productData, ICategoryData categoryData, ILogger<ProductsController> logger)
         {
             _productData = productData;
             _categoryData = categoryData;
@@ -31,28 +32,31 @@ namespace NorthWeird.WebApi.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _productData.GetAllAsync());
+            try
+            {
+                return Ok(await _productData.GetAllAsync());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception was thrown while getting products");
+            }
+
+            return BadRequest("Couldn't get a products");
         }
 
         /// <summary>
         /// Retrieves a specific product by unique id
         /// </summary>
         /// <param name="id">Id of the product</param>
-        /// <param name="includeCategory">flag for including category into product object</param>
         /// <response code="200">Product with such id was found</response>
         /// <response code="404">Product with such id was not found</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpGet("{id}", Name = "ProductGet")]
-        public async Task<IActionResult> Get(int id, bool includeCategory = false)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var product = await _productData.GetAsync(id);
-                if (includeCategory)
-                {
-                    product.Category = await _categoryData.GetAsync(product.CategoryId);
-                }
-
                 if (product == null)
                 {
                     return NotFound($"Product {id} was not found");
@@ -60,12 +64,12 @@ namespace NorthWeird.WebApi.Controllers
 
                 return Ok(product);
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError($"Exception was thrown while getting product with id {id}");
+                _logger.LogError(ex, $"Exception was thrown while getting product with id {id}");
             }
 
-            return BadRequest();
+            return BadRequest("Couldn't get a product");
         }
 
         /// <summary>
@@ -75,7 +79,7 @@ namespace NorthWeird.WebApi.Controllers
         /// <response code="200">Product was created</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Product product)
+        public async Task<IActionResult> Post([FromBody]ProductDto product)
         {
             try
             {
@@ -83,12 +87,12 @@ namespace NorthWeird.WebApi.Controllers
                 var newUri = Url.Link("ProductGet",new {id = product.ProductId});
                 return Created(newUri, product);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Exception was thrown while creating new product");
             }
 
-            return BadRequest();
+            return BadRequest("Couldn't create a product");
         }
 
         /// <summary>
@@ -99,22 +103,22 @@ namespace NorthWeird.WebApi.Controllers
         /// <response code="200">Product was updated</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Product product)
+        public async Task<IActionResult> Put(int id, [FromBody]ProductDto product)
         {
             try
             {
-                //var oldProduct = await _productData.GetAsync(id);
-                //if (oldProduct == null)
-                //{
-                //    return NotFound($"Could not find a product with id {id}");
-                //}
+                var oldProduct = await _productData.GetAsync(id);
+                if (oldProduct == null)
+                {
+                    return NotFound($"Could not find a product with id {id}");
+                }
 
                 await _productData.UpdateAsync(product);
                 return Ok(product);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.LogError(ex, $"Exception was thrown while updating product with id {id}");
             }
 
             return BadRequest("Couldn't update product");
@@ -141,9 +145,9 @@ namespace NorthWeird.WebApi.Controllers
                 await _productData.DeleteAsync(oldProduct);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.LogError(ex, $"Exception was thrown while deleting product with id {id}");
             }
 
             return BadRequest("Couldn't delete product");

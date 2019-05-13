@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Mime;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NorthWeird.Application.Interfaces;
-using NorthWeird.Domain.Entities;
+using NorthWeird.Application.Models;
 using NorthWeird.Persistence;
 using NorthWeird.Infrastructure.Image;
 
@@ -16,14 +13,17 @@ namespace NorthWeird.Application.Services
     public class SqlCategoryData : ICategoryData
     {
         private readonly NorthWeirdDbContext _context;
+        private readonly IMapper _mapper;
 
-        public SqlCategoryData(NorthWeirdDbContext context)
+        public SqlCategoryData(NorthWeirdDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        public async Task<IEnumerable<Category>> GetAllAsync()
+        public async Task<IEnumerable<CategoryDto>> GetAllAsync()
         {
-            return await _context.Categories.ToListAsync(CancellationToken.None);
+            var resultCategory = await _context.Categories.ToListAsync(CancellationToken.None);
+            return _mapper.Map<IEnumerable<CategoryDto>>(resultCategory);
         }
 
         public async Task<byte[]> GetImageByCategoryIdAsync(int categoryId)
@@ -35,13 +35,13 @@ namespace NorthWeird.Application.Services
                 : ImageHelper.FixBrokenImage(category.Picture);
         }
 
-        public async Task<Category> GetAsync(int id)
+        public async Task<CategoryDto> GetAsync(int id)
         {
-            return await _context.Categories.SingleOrDefaultAsync(c => c.CategoryId == id, CancellationToken.None);
-
+            var resultCategory = await _context.Categories.SingleOrDefaultAsync(c => c.CategoryId == id, CancellationToken.None);
+            return _mapper.Map<CategoryDto>(resultCategory);
         }
 
-        public async Task<Category> UpdateImageAsync(Category category)
+        public async Task<CategoryDto> UpdateImageAsync(CategoryDto category)
         {
             var categoryToUpdate =
                 await _context.Categories.SingleOrDefaultAsync(c => c.CategoryId == category.CategoryId);
@@ -49,7 +49,7 @@ namespace NorthWeird.Application.Services
             categoryToUpdate.Picture = category.Picture;
 
             await _context.SaveChangesAsync(CancellationToken.None);
-            return categoryToUpdate;
+            return _mapper.Map<CategoryDto>(categoryToUpdate);
         }
     }
 }

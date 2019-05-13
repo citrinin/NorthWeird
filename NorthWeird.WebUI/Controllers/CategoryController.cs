@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NorthWeird.Application.Interfaces;
 using System.Threading.Tasks;
-using NorthWeird.Domain.Entities;
+using NorthWeird.Application.Models;
 using NorthWeird.WebUI.Filters;
 using NorthWeird.WebUI.ViewModel;
 
@@ -34,7 +34,7 @@ namespace NorthWeird.WebUI.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var model = await _categoryData.GetAsync(id);
-            return model == null ? View("CategoryNotFound", id) : View(new EditCategoryViewModel{Category = model});
+            return model == null ? View("CategoryNotFound", id) : View(new EditCategoryViewModel { Category = model });
         }
 
         [HttpPost]
@@ -43,7 +43,7 @@ namespace NorthWeird.WebUI.Controllers
             var files = HttpContext.Request.Form.Files;
             if (ModelState.IsValid)
             {
-                var categoryToUpdate = new Category {CategoryId = editCategory.Category.CategoryId};
+                var categoryToUpdate = new CategoryDto { CategoryId = editCategory.Category.CategoryId };
                 using (var ms = new MemoryStream())
                 {
                     await editCategory.FormFile.CopyToAsync(ms);

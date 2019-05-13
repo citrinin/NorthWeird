@@ -6,6 +6,7 @@ using NorthWeird.WebUI.Controllers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NorthWeird.Application.Models;
 using Xunit;
 
 namespace NorthWeird.WebUI.Tests.Controllers
@@ -15,15 +16,15 @@ namespace NorthWeird.WebUI.Tests.Controllers
         private readonly IProductData _productService;
         private readonly ICategoryData _categoryService;
         private readonly ISupplierData _supplierService;
-        private readonly List<Product> _productList;
+        private readonly List<ProductDto> _productList;
 
         public ProductControllerTests()
         {
-            _productList = new List<Product>
+            _productList = new List<ProductDto>
             {
-                new Product {ProductId = 1, ProductName = "Frutella", CategoryId = 1, SupplierId = 1},
-                new Product {ProductId = 2, ProductName = "Mars", CategoryId = 2, SupplierId = 2},
-                new Product {ProductId = 3, ProductName = "Onion", CategoryId = 3, SupplierId = 3}
+                new ProductDto {ProductId = 1, ProductName = "Frutella", CategoryId = 1, SupplierId = 1},
+                new ProductDto {ProductId = 2, ProductName = "Mars", CategoryId = 2, SupplierId = 2},
+                new ProductDto {ProductId = 3, ProductName = "Onion", CategoryId = 3, SupplierId = 3}
             };
 
             var mockProduct = new Mock<IProductData>();
@@ -32,17 +33,17 @@ namespace NorthWeird.WebUI.Tests.Controllers
                 .ReturnsAsync(_productList);
 
             mockProduct
-                .Setup(service => service.AddAsync(It.IsAny<Product>()))
-                .Callback((Product product) => _productList.Add(product))
-                .Returns((Product product) => Task.FromResult(product));
+                .Setup(service => service.AddAsync(It.IsAny<ProductDto>()))
+                .Callback((ProductDto product) => _productList.Add(product))
+                .Returns((ProductDto product) => Task.FromResult(product));
 
             mockProduct
                 .Setup(service => service.GetAsync(It.IsAny<int>()))
                 .Returns((int id) => Task.FromResult(_productList.Find(p => p.ProductId == id)));
 
             mockProduct
-                .Setup(service => service.UpdateAsync(It.IsAny<Product>()))
-                .Returns((Product product) =>
+                .Setup(service => service.UpdateAsync(It.IsAny<ProductDto>()))
+                .Returns((ProductDto product) =>
                 {
                     var productToUpdate = _productList.Find(p => p.ProductId == product.ProductId);
                     productToUpdate.ProductName = product.ProductName;
@@ -53,13 +54,13 @@ namespace NorthWeird.WebUI.Tests.Controllers
 
             var mockSupplier = new Mock<ISupplierData>();
             mockSupplier.Setup(service => service.GetAllAsync())
-                .ReturnsAsync(new List<Supplier>());
+                .ReturnsAsync(new List<SupplierDto>());
 
             _supplierService = mockSupplier.Object;
 
             var mockCategory = new Mock<ICategoryData>();
             mockCategory.Setup(service => service.GetAllAsync())
-                .ReturnsAsync(new List<Category>());
+                .ReturnsAsync(new List<CategoryDto>());
 
             _categoryService = mockCategory.Object;
         }
@@ -71,7 +72,7 @@ namespace NorthWeird.WebUI.Tests.Controllers
 
             var result = await controller.Index();
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Product>>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<IEnumerable<ProductDto>>(viewResult.ViewData.Model);
             Assert.Equal(3, model.Count());
         }
 
@@ -90,7 +91,7 @@ namespace NorthWeird.WebUI.Tests.Controllers
         public async Task Create_WithModelParam_AddsModelAndRedirectsToIndexAction()
         {
             var controller = new ProductController(_productService, _categoryService, _supplierService);
-            var productToAdd = new Product { ProductName = "Lososij", ProductId = 0 };
+            var productToAdd = new ProductDto { ProductName = "Lososij", ProductId = 0 };
 
             var result = await controller.Create(productToAdd);
 
@@ -106,7 +107,7 @@ namespace NorthWeird.WebUI.Tests.Controllers
             var modelId = 2;
             var result = await controller.Edit(modelId);
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<Product>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<ProductDto>(viewResult.ViewData.Model);
 
             Assert.Equal(modelId, model.ProductId);
         }
@@ -128,7 +129,7 @@ namespace NorthWeird.WebUI.Tests.Controllers
         public async Task Edit_WithModelParam_AddsModelAndRedirectsToIndexAction()
         {
             var controller = new ProductController(_productService, _categoryService, _supplierService);
-            var productToUpdate = new Product { ProductName = "Lososij", ProductId = 2 };
+            var productToUpdate = new ProductDto { ProductName = "Lososij", ProductId = 2 };
 
             var result = await controller.Edit(productToUpdate);
 

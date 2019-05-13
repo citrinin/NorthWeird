@@ -6,7 +6,10 @@ using NorthWeird.Application.Tests.Infrastructure;
 using NorthWeird.Persistence;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using NorthWeird.Application.Mapping;
+using NorthWeird.Application.Models;
 using NorthWeird.Application.Services;
 using NorthWeird.Domain.Entities;
 
@@ -16,11 +19,13 @@ namespace NorthWeird.Application.Tests.Services
     {
         private NorthWeirdDbContext _context;
         private IConfiguration _configuration;
+        private IMapper _mapper;
 
         [SetUp]
         public void Setup()
         {
             _context = NorthWeirdDbContextFactory.Create();
+            _mapper = new MapperConfiguration(c => c.AddMaps(typeof(ProductMappingProfile))).CreateMapper();
         }
 
         [TearDown]
@@ -40,7 +45,7 @@ namespace NorthWeird.Application.Tests.Services
                     new KeyValuePair<string, string>("ModelSettings:ProductsPerPage", productsPerPage.ToString())
                 })
                 .Build();
-            var service = new SqlProductData(_context, _configuration);
+            var service = new SqlProductData(_context, _configuration, _mapper);
 
             var products = await service.GetAllAsync();
             Assert.AreEqual(resultProductNumber, products.Count());
@@ -56,8 +61,8 @@ namespace NorthWeird.Application.Tests.Services
                 .Options;
             using (var context = new NorthWeirdDbContext(options))
             {
-                var service = new SqlProductData(context, _configuration);
-                var productToAdd = new Product { ProductName = "Lososij", ProductId = 4 };
+                var service = new SqlProductData(context, _configuration, _mapper);
+                var productToAdd = new ProductDto { ProductName = "Lososij", ProductId = 4 };
                 await service.AddAsync(productToAdd);
             }
 
@@ -100,8 +105,8 @@ namespace NorthWeird.Application.Tests.Services
                 .Options;
             using (var context = new NorthWeirdDbContext(options))
             {
-                var service = new SqlProductData(context, _configuration);
-                var productToAdd = new Product { ProductName = "Molochko", ProductId = 1 };
+                var service = new SqlProductData(context, _configuration, _mapper);
+                var productToAdd = new ProductDto { ProductName = "Molochko", ProductId = 1 };
                 await service.AddAsync(productToAdd);
             }
 
@@ -116,8 +121,8 @@ namespace NorthWeird.Application.Tests.Services
 
             using (var context = new NorthWeirdDbContext(options))
             {
-                var service = new SqlProductData(context, _configuration);
-                var productToUpdate = new Product { ProductName = "Lososij", ProductId = 1 };
+                var service = new SqlProductData(context, _configuration, _mapper);
+                var productToUpdate = new ProductDto { ProductName = "Lososij", ProductId = 1 };
                 await service.UpdateAsync(productToUpdate);
             }
 
@@ -138,7 +143,7 @@ namespace NorthWeird.Application.Tests.Services
         public async Task GetAsyncTest_ShouldReturnProductByIdWithSpecifiedProductName(int productId, string productName)
         {
             _configuration = new ConfigurationBuilder().Build();
-            var service = new SqlProductData(_context, _configuration);
+            var service = new SqlProductData(_context, _configuration, _mapper);
 
             var product = await service.GetAsync(productId);
             Assert.AreEqual(productName, product?.ProductName);

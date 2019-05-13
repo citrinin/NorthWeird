@@ -11,7 +11,9 @@ namespace NorthWeird.Application.Mapping
             CreateMap<Product, ProductDto>()
                 .ForMember(p=>p.CategoryName, opt => opt.MapFrom(product=>product.Category.CategoryName))
                 .ForMember(p=>p.SupplierName, opt => opt.MapFrom(product=>product.Supplier.CompanyName))
-                .ReverseMap();
+                .ReverseMap()
+                .ForMember(p=>p.Category, opt => opt.Ignore())
+                .ForMember(p=>p.Supplier, opt => opt.Ignore());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Mapping;
 using NorthWeird.Application.Services;
+using NorthWeird.Application.Validation;
 using NorthWeird.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -43,7 +45,7 @@ namespace NorthWeird.WebApi
                     });
             });
 
-            services.AddMvc();
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ProductValidator>());
                 //.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAutoMapper(typeof(ProductMappingProfile));
