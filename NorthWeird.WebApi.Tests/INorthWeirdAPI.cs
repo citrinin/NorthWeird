@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace NorthWeird.AutoGen
+namespace NorthWeird.WebApiTests
 {
     using Microsoft.Rest;
     using Models;
@@ -65,7 +65,7 @@ namespace NorthWeird.AutoGen
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> PostWithHttpMessagesAsync(Product product = default(Product), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> PostWithHttpMessagesAsync(ProductDto product = default(ProductDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Retrieves a specific product by unique id
@@ -73,16 +73,13 @@ namespace NorthWeird.AutoGen
         /// <param name='id'>
         /// Id of the product
         /// </param>
-        /// <param name='includeCategory'>
-        /// flag for including category into product object
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> ProductGetWithHttpMessagesAsync(int id, bool? includeCategory = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> ProductGetWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Updates product from request body
@@ -99,7 +96,7 @@ namespace NorthWeird.AutoGen
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> PutWithHttpMessagesAsync(int id, Product product = default(Product), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> PutWithHttpMessagesAsync(int id, ProductDto product = default(ProductDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Deletes product from request body

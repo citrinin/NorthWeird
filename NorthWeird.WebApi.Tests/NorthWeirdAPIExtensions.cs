@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace NorthWeird.AutoGen
+namespace NorthWeird.WebApiTests
 {
     using Models;
     using System.Threading;
@@ -68,7 +68,7 @@ namespace NorthWeird.AutoGen
             /// <param name='product'>
             /// Product that needs to be created
             /// </param>
-            public static void Post(this INorthWeirdAPI operations, Product product = default(Product))
+            public static void Post(this INorthWeirdAPI operations, ProductDto product = default(ProductDto))
             {
                 operations.PostAsync(product).GetAwaiter().GetResult();
             }
@@ -85,7 +85,7 @@ namespace NorthWeird.AutoGen
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PostAsync(this INorthWeirdAPI operations, Product product = default(Product), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PostAsync(this INorthWeirdAPI operations, ProductDto product = default(ProductDto), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.PostWithHttpMessagesAsync(product, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -99,12 +99,9 @@ namespace NorthWeird.AutoGen
             /// <param name='id'>
             /// Id of the product
             /// </param>
-            /// <param name='includeCategory'>
-            /// flag for including category into product object
-            /// </param>
-            public static void ProductGet(this INorthWeirdAPI operations, int id, bool? includeCategory = false)
+            public static void ProductGet(this INorthWeirdAPI operations, int id)
             {
-                operations.ProductGetAsync(id, includeCategory).GetAwaiter().GetResult();
+                operations.ProductGetAsync(id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -116,15 +113,12 @@ namespace NorthWeird.AutoGen
             /// <param name='id'>
             /// Id of the product
             /// </param>
-            /// <param name='includeCategory'>
-            /// flag for including category into product object
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ProductGetAsync(this INorthWeirdAPI operations, int id, bool? includeCategory = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ProductGetAsync(this INorthWeirdAPI operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ProductGetWithHttpMessagesAsync(id, includeCategory, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ProductGetWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -139,7 +133,7 @@ namespace NorthWeird.AutoGen
             /// <param name='product'>
             /// Product that needs to be updated
             /// </param>
-            public static void Put(this INorthWeirdAPI operations, int id, Product product = default(Product))
+            public static void Put(this INorthWeirdAPI operations, int id, ProductDto product = default(ProductDto))
             {
                 operations.PutAsync(id, product).GetAwaiter().GetResult();
             }
@@ -159,7 +153,7 @@ namespace NorthWeird.AutoGen
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PutAsync(this INorthWeirdAPI operations, int id, Product product = default(Product), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PutAsync(this INorthWeirdAPI operations, int id, ProductDto product = default(ProductDto), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.PutWithHttpMessagesAsync(id, product, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

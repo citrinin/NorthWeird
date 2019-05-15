@@ -1,5 +1,6 @@
 using System;
-using NorthWeird.AutoGen;
+using System.Threading;
+using NorthWeird.WebApiTests;
 using Xunit;
 
 namespace NorthWeird.WebApi.Tests
@@ -9,9 +10,9 @@ namespace NorthWeird.WebApi.Tests
         [Fact]
         public async void Test1()
         {
-            var xz = new NorthWeirdAPI();
+            var northWeirdApi = new NorthWeirdAPI();
 
-            var result = await xz.ProductGetWithHttpMessagesAsync(1);
+            var result = await northWeirdApi.Get1WithHttpMessagesAsync();
 
             var r = await result.Response.Content.ReadAsStringAsync();
             Console.WriteLine(r);

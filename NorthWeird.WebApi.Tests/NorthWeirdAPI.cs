@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace NorthWeird.AutoGen
+namespace NorthWeird.WebApiTests
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
@@ -126,7 +126,7 @@ namespace NorthWeird.AutoGen
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("http://localhost:52370/");
+            BaseUri = new System.Uri("http://localhost:52370");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -367,7 +367,7 @@ namespace NorthWeird.AutoGen
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> PostWithHttpMessagesAsync(Product product = default(Product), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> PostWithHttpMessagesAsync(ProductDto product = default(ProductDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -464,9 +464,6 @@ namespace NorthWeird.AutoGen
         /// <param name='id'>
         /// Id of the product
         /// </param>
-        /// <param name='includeCategory'>
-        /// flag for including category into product object
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -479,7 +476,7 @@ namespace NorthWeird.AutoGen
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> ProductGetWithHttpMessagesAsync(int id, bool? includeCategory = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> ProductGetWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -489,7 +486,6 @@ namespace NorthWeird.AutoGen
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
-                tracingParameters.Add("includeCategory", includeCategory);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ProductGet", tracingParameters);
             }
@@ -497,15 +493,6 @@ namespace NorthWeird.AutoGen
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/products/{id}").ToString();
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
-            List<string> _queryParameters = new List<string>();
-            if (includeCategory != null)
-            {
-                _queryParameters.Add(string.Format("includeCategory={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(includeCategory, SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -596,7 +583,7 @@ namespace NorthWeird.AutoGen
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> PutWithHttpMessagesAsync(int id, Product product = default(Product), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> PutWithHttpMessagesAsync(int id, ProductDto product = default(ProductDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

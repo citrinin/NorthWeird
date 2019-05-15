@@ -4,25 +4,25 @@
 // regenerated.
 // </auto-generated>
 
-namespace NorthWeird.AutoGen.Models
+namespace NorthWeird.WebApiTests.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class Product
+    public partial class ProductDto
     {
         /// <summary>
-        /// Initializes a new instance of the Product class.
+        /// Initializes a new instance of the ProductDto class.
         /// </summary>
-        public Product()
+        public ProductDto()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Product class.
+        /// Initializes a new instance of the ProductDto class.
         /// </summary>
-        public Product(string productName = default(string), int? productId = default(int?), int? categoryId = default(int?), int? supplierId = default(int?), string quantityPerUnit = default(string), double? unitPrice = default(double?), int? unitsInStock = default(int?), int? unitsOnOrder = default(int?), int? reorderLevel = default(int?), bool? discontinued = default(bool?), Category category = default(Category), Supplier supplier = default(Supplier))
+        public ProductDto(string productName = default(string), int? productId = default(int?), int? categoryId = default(int?), int? supplierId = default(int?), string quantityPerUnit = default(string), double? unitPrice = default(double?), int? unitsInStock = default(int?), int? unitsOnOrder = default(int?), int? reorderLevel = default(int?), bool? discontinued = default(bool?), string categoryName = default(string), string supplierName = default(string))
         {
             ProductName = productName;
             ProductId = productId;
@@ -34,8 +34,8 @@ namespace NorthWeird.AutoGen.Models
             UnitsOnOrder = unitsOnOrder;
             ReorderLevel = reorderLevel;
             Discontinued = discontinued;
-            Category = category;
-            Supplier = supplier;
+            CategoryName = categoryName;
+            SupplierName = supplierName;
             CustomInit();
         }
 
@@ -96,13 +96,13 @@ namespace NorthWeird.AutoGen.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "category")]
-        public Category Category { get; set; }
+        [JsonProperty(PropertyName = "categoryName")]
+        public string CategoryName { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "supplier")]
-        public Supplier Supplier { get; set; }
+        [JsonProperty(PropertyName = "supplierName")]
+        public string SupplierName { get; set; }
 
     }
 }

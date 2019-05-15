@@ -4,10 +4,22 @@
         <name>NorthWeird.WebApi</name>
     </assembly>
     <members>
+        <member name="T:NorthWeird.WebApi.Controllers.CategoriesController">
+            <inheritdoc />
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.CategoriesController.#ctor(NorthWeird.Application.Interfaces.ICategoryData)">
+            <inheritdoc />
+        </member>
+        <member name="M:NorthWeird.WebApi.Controllers.CategoriesController.Get">
+            <summary>
+            Retrieves a category list
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:NorthWeird.WebApi.Controllers.ProductsController">
             <inheritdoc />
         </member>
-        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.#ctor(NorthWeird.Application.Interfaces.IProductData)">
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.#ctor(NorthWeird.Application.Interfaces.IProductData,NorthWeird.Application.Interfaces.ICategoryData,Microsoft.Extensions.Logging.ILogger{NorthWeird.WebApi.Controllers.ProductsController})">
             <inheritdoc />
         </member>
         <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Get">
@@ -17,17 +29,16 @@
             <response code="200">Product list successfully obtained</response>
             <response code="500">Oops! Some problems with server</response>
         </member>
-        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Get(System.Int32,System.Boolean)">
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Get(System.Int32)">
             <summary>
             Retrieves a specific product by unique id
             </summary>
             <param name="id">Id of the product</param>
-            <param name="includeCategory">flag for including category into product object</param>
             <response code="200">Product with such id was found</response>
             <response code="404">Product with such id was not found</response>
             <response code="500">Oops! Some problems with server</response>
         </member>
-        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Post(NorthWeird.Domain.Entities.Product)">
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Post(NorthWeird.Application.Models.ProductDto)">
             <summary>
             Creates product from request body
             </summary>
@@ -35,7 +46,7 @@
             <response code="200">Product was created</response>
             <response code="500">Oops! Some problems with server</response>
         </member>
-        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Put(System.Int32,NorthWeird.Domain.Entities.Product)">
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Put(System.Int32,NorthWeird.Application.Models.ProductDto)">
             <summary>
             Updates product from request body
             </summary>
