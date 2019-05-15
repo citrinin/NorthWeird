@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using NorthWeird.Domain.Entities;
+using NorthWeird.Application.Models;
 
 namespace NorthWeird.Application.Validation
 {
-    public class CategoryValidator: AbstractValidator<Category>
+    public class CategoryValidator: AbstractValidator<CategoryDto>
     {
         public CategoryValidator()
         {

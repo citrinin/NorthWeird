@@ -78,8 +78,13 @@ namespace NorthWeird.Application.Services
 
         public async Task<ProductDto> UpdateAsync(ProductDto productToUpdate)
         {
-            var product = _mapper.Map<Product>(productToUpdate);
-            _context.Attach(product).State = EntityState.Modified;
+            var oldProduct = await _context.Products.SingleOrDefaultAsync(p => p.ProductId == productToUpdate.ProductId, CancellationToken.None);
+            if (oldProduct == null)
+            {
+                throw new NullReferenceException("old product is null");
+            }
+
+            var product = _mapper.Map(productToUpdate, oldProduct);
 
             await _context.SaveChangesAsync(CancellationToken.None);
             return _mapper.Map<ProductDto>(product);

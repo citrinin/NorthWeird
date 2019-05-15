@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Models;
-using NorthWeird.Domain.Entities;
+using NorthWeird.WebApi.Filters;
 
 namespace NorthWeird.WebApi.Controllers
 {
     /// <inheritdoc />
     [Route("api/products")]
+    [ValidateModel]
     public class ProductsController : Controller
     {
         private readonly IProductData _productData;
@@ -28,6 +29,7 @@ namespace NorthWeird.WebApi.Controllers
         /// Retrieves a product list that contains full list of products
         /// </summary>
         /// <response code="200">Product list successfully obtained</response>
+        /// <response code="400">Couldn't get products</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpGet("")]
         public async Task<IActionResult> Get()
@@ -49,6 +51,7 @@ namespace NorthWeird.WebApi.Controllers
         /// </summary>
         /// <param name="id">Id of the product</param>
         /// <response code="200">Product with such id was found</response>
+        /// <response code="400">Couldn't get a product</response>
         /// <response code="404">Product with such id was not found</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpGet("{id}", Name = "ProductGet")]
@@ -77,6 +80,7 @@ namespace NorthWeird.WebApi.Controllers
         /// </summary>
         /// <param name="product">Product that needs to be created</param>
         /// <response code="200">Product was created</response>
+        /// <response code="400">Couldn't create a product</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ProductDto product)
@@ -101,6 +105,7 @@ namespace NorthWeird.WebApi.Controllers
         /// <param name="id">id of the product that needs to be updated</param>
         /// <param name="product">Product that needs to be updated</param>
         /// <response code="200">Product was updated</response>
+        /// <response code="400">Couldn't update product</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]ProductDto product)
@@ -129,6 +134,7 @@ namespace NorthWeird.WebApi.Controllers
         /// </summary>
         /// <param name="id">id of the product that needs to be deleted</param>
         /// <response code="200">Product was deleted</response>
+        /// <response code="400">Couldn't delete product</response>
         /// <response code="404">Product with such id was not found</response>
         /// <response code="500">Oops! Some problems with server</response>
         [HttpDelete("{id}")]

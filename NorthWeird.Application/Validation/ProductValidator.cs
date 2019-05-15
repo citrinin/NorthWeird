@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using NorthWeird.Domain.Entities;
+using NorthWeird.Application.Models;
 
 namespace NorthWeird.Application.Validation
 {
-    public class ProductValidator : AbstractValidator<Product>
+    public class ProductValidator : AbstractValidator<ProductDto>
     {
         public ProductValidator()
         {
