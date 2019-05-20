@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Models;
 using NorthWeird.WebApi.Filters;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthWeird.WebApi.Controllers
 {
@@ -133,7 +134,7 @@ namespace NorthWeird.WebApi.Controllers
         /// Deletes product from request body
         /// </summary>
         /// <param name="id">id of the product that needs to be deleted</param>
-        /// <response code="200">Product was deleted</response>
+        /// <response code="204">Product was deleted</response>
         /// <response code="400">Couldn't delete product</response>
         /// <response code="404">Product with such id was not found</response>
         /// <response code="500">Oops! Some problems with server</response>
@@ -149,7 +150,7 @@ namespace NorthWeird.WebApi.Controllers
                 }
 
                 await _productData.DeleteAsync(oldProduct);
-                return Ok();
+                return NoContent();
             }
             catch (Exception ex)
             {

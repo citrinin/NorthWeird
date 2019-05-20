@@ -6,13 +6,8 @@
 
 namespace NorthWeird.WebApiTests
 {
-    using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// </summary>
@@ -34,83 +29,15 @@ namespace NorthWeird.WebApiTests
         JsonSerializerSettings DeserializationSettings { get; }
 
 
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the ICategories.
+        /// </summary>
+        ICategories Categories { get; }
 
         /// <summary>
-        /// Retrieves a product list that contains full list of products
+        /// Gets the IProducts.
         /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse> Get1WithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Creates product from request body
-        /// </summary>
-        /// <param name='product'>
-        /// Product that needs to be created
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse> PostWithHttpMessagesAsync(ProductDto product = default(ProductDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Retrieves a specific product by unique id
-        /// </summary>
-        /// <param name='id'>
-        /// Id of the product
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse> ProductGetWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Updates product from request body
-        /// </summary>
-        /// <param name='id'>
-        /// id of the product that needs to be updated
-        /// </param>
-        /// <param name='product'>
-        /// Product that needs to be updated
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse> PutWithHttpMessagesAsync(int id, ProductDto product = default(ProductDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Deletes product from request body
-        /// </summary>
-        /// <param name='id'>
-        /// id of the product that needs to be deleted
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IProducts Products { get; }
 
     }
 }

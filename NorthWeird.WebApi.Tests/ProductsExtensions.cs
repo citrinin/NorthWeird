@@ -11,38 +11,19 @@ namespace NorthWeird.WebApiTests
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for NorthWeirdAPI.
+    /// Extension methods for Products.
     /// </summary>
-    public static partial class NorthWeirdAPIExtensions
+    public static partial class ProductsExtensions
     {
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static void Get(this INorthWeirdAPI operations)
-            {
-                operations.GetAsync().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task GetAsync(this INorthWeirdAPI operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
             /// <summary>
             /// Retrieves a product list that contains full list of products
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Get1(this INorthWeirdAPI operations)
+            public static void GET(this IProducts operations)
             {
-                operations.Get1Async().GetAwaiter().GetResult();
+                operations.GETAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,9 +35,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task Get1Async(this INorthWeirdAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GETAsync(this IProducts operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.Get1WithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.GETWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -68,9 +49,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='product'>
             /// Product that needs to be created
             /// </param>
-            public static void Post(this INorthWeirdAPI operations, ProductDto product = default(ProductDto))
+            public static void POST(this IProducts operations, ProductDto product = default(ProductDto))
             {
-                operations.PostAsync(product).GetAwaiter().GetResult();
+                operations.POSTAsync(product).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,9 +66,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PostAsync(this INorthWeirdAPI operations, ProductDto product = default(ProductDto), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task POSTAsync(this IProducts operations, ProductDto product = default(ProductDto), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.PostWithHttpMessagesAsync(product, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.POSTWithHttpMessagesAsync(product, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -99,9 +80,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='id'>
             /// Id of the product
             /// </param>
-            public static void ProductGet(this INorthWeirdAPI operations, int id)
+            public static void GET1(this IProducts operations, int id)
             {
-                operations.ProductGetAsync(id).GetAwaiter().GetResult();
+                operations.GET1Async(id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -116,9 +97,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ProductGetAsync(this INorthWeirdAPI operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GET1Async(this IProducts operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ProductGetWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.GET1WithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -133,9 +114,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='product'>
             /// Product that needs to be updated
             /// </param>
-            public static void Put(this INorthWeirdAPI operations, int id, ProductDto product = default(ProductDto))
+            public static void PUT(this IProducts operations, int id, ProductDto product = default(ProductDto))
             {
-                operations.PutAsync(id, product).GetAwaiter().GetResult();
+                operations.PUTAsync(id, product).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -153,9 +134,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PutAsync(this INorthWeirdAPI operations, int id, ProductDto product = default(ProductDto), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PUTAsync(this IProducts operations, int id, ProductDto product = default(ProductDto), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.PutWithHttpMessagesAsync(id, product, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.PUTWithHttpMessagesAsync(id, product, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -167,9 +148,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='id'>
             /// id of the product that needs to be deleted
             /// </param>
-            public static void Delete(this INorthWeirdAPI operations, int id)
+            public static void DELETE(this IProducts operations, int id)
             {
-                operations.DeleteAsync(id).GetAwaiter().GetResult();
+                operations.DELETEAsync(id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -184,9 +165,9 @@ namespace NorthWeird.WebApiTests
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this INorthWeirdAPI operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DELETEAsync(this IProducts operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DELETEWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

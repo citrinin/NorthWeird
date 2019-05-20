@@ -52,6 +52,7 @@ namespace NorthWeird.WebApi
 
             services.AddSwaggerGen(c =>
             {
+                c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["controller"]}_{e.HttpMethod}");
                 c.SwaggerDoc("v1", new Info { Title = "NorthWeird API", Version = "v1" });
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "NorthWeird.WebApi.xml");
                 c.IncludeXmlComments(filePath);
