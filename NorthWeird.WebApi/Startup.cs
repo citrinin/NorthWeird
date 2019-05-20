@@ -12,6 +12,7 @@ using NorthWeird.Application.Mapping;
 using NorthWeird.Application.Services;
 using NorthWeird.Application.Validation;
 using NorthWeird.Persistence;
+using NorthWeird.WebApi.Middlewares;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthWeird.WebApi
@@ -69,10 +70,8 @@ namespace NorthWeird.WebApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "NorthWeird API V1");
             });
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseExceptionMiddleware();
+
 
             app.UseCors(_myAllowSpecificOrigins);
             app.UseHttpsRedirection();

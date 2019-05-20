@@ -19,7 +19,7 @@
         <member name="T:NorthWeird.WebApi.Controllers.ProductsController">
             <inheritdoc />
         </member>
-        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.#ctor(NorthWeird.Application.Interfaces.IProductData,NorthWeird.Application.Interfaces.ICategoryData,Microsoft.Extensions.Logging.ILogger{NorthWeird.WebApi.Controllers.ProductsController})">
+        <member name="M:NorthWeird.WebApi.Controllers.ProductsController.#ctor(NorthWeird.Application.Interfaces.IProductData)">
             <inheritdoc />
         </member>
         <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Get">
@@ -36,7 +36,6 @@
             </summary>
             <param name="id">Id of the product</param>
             <response code="200">Product with such id was found</response>
-            <response code="400">Couldn't get a product</response>
             <response code="404">Product with such id was not found</response>
             <response code="500">Oops! Some problems with server</response>
         </member>
@@ -45,8 +44,7 @@
             Creates product from request body
             </summary>
             <param name="product">Product that needs to be created</param>
-            <response code="200">Product was created</response>
-            <response code="400">Couldn't create a product</response>
+            <response code="201">Product was created</response>
             <response code="500">Oops! Some problems with server</response>
         </member>
         <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Put(System.Int32,NorthWeird.Application.Models.ProductDto)">
@@ -56,7 +54,7 @@
             <param name="id">id of the product that needs to be updated</param>
             <param name="product">Product that needs to be updated</param>
             <response code="200">Product was updated</response>
-            <response code="400">Couldn't update product</response>
+            <response code="404">Product with such id was not found</response>
             <response code="500">Oops! Some problems with server</response>
         </member>
         <member name="M:NorthWeird.WebApi.Controllers.ProductsController.Delete(System.Int32)">
@@ -65,7 +63,6 @@
             </summary>
             <param name="id">id of the product that needs to be deleted</param>
             <response code="204">Product was deleted</response>
-            <response code="400">Couldn't delete product</response>
             <response code="404">Product with such id was not found</response>
             <response code="500">Oops! Some problems with server</response>
         </member>

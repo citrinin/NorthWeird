@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using System.IO;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using NorthWeird.Infrastructure.Logging;
 
 namespace NorthWeird.WebApi
 {
@@ -12,6 +16,11 @@ namespace NorthWeird.WebApi
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddProvider(new FileLoggerProvider(Path.Combine(Directory.GetCurrentDirectory(), $"logger-{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.log")));
+                })
                 .UseStartup<Startup>();
     }
 }
