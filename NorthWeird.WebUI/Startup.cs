@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +20,7 @@ using NorthWeird.Application.Validation;
 using NorthWeird.Persistence;
 using NorthWeird.WebUI.Filters;
 using NorthWeird.WebUI.Middleware;
+using NorthWeird.WebUI.Validation;
 
 namespace NorthWeird.WebUI
 {
@@ -45,14 +49,37 @@ namespace NorthWeird.WebUI
 
             _logger.LogInformation(string.Join(Environment.NewLine, _configuration.AsEnumerable().Select((k, v) => $"{k.Key} - {k.Value}")));
 
-            services.AddMvc().AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<ProductValidator>());
-            services.AddAutoMapper(typeof(ProductMappingProfile));
-
+            services
+                .AddMvc()
+                .AddFluentValidation(fv=>
+                {
+                    fv.RegisterValidatorsFromAssemblyContaining<ProductValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RegisterViewModelValidator>();
+                });
 
             if (!_environment.IsDevelopment())
             {
                 services.Configure<MvcOptions>(o => o.Filters.Add(new RequireHttpsAttribute()));
             }
+
+            services.AddAutoMapper(typeof(ProductMappingProfile));
+
+            //Identity
+
+            var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            services
+                .AddDbContext<IdentityDbContext>(
+                    options => options.UseSqlServer(_configuration.GetConnectionString("Identity"),
+                    sql=>sql.MigrationsAssembly(migrationAssembly))
+                );
+
+            services.AddIdentityCore<IdentityUser>();
+            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
+
+            services
+                .AddAuthentication("cookies")
+                .AddCookie("cookies", options => options.LoginPath = "/auth/login");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -61,6 +88,8 @@ namespace NorthWeird.WebUI
             //{
             //    app.UseExceptionHandler("/Error");
             //}
+
+            app.UseAuthentication();
 
             app.UseStaticFiles();
 

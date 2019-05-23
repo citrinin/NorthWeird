@@ -18,6 +18,9 @@
                 <li class="@($"nav-item {(string.Equals(ViewContext.RouteData.Values["controller"], "Category") ? "active" : "")}")">
                     <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
                 </li>
+                <li class="@($"nav-item {(string.Equals(ViewContext.RouteData.Values["controller"], "Auth") ? "active" : "")}")">
+                    <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
+                </li>
             </ul>
         </div>
     </nav>
