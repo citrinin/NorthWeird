@@ -13,10 +13,12 @@ namespace NorthWeird.WebUI.Controllers
     public class AuthController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserClaimsPrincipalFactory<IdentityUser> _claimsPrincipalFactory;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager, IUserClaimsPrincipalFactory<IdentityUser> claimsPrincipalFactory)
         {
             _userManager = userManager;
+            _claimsPrincipalFactory = claimsPrincipalFactory;
         }
 
         [HttpGet]
@@ -68,12 +70,9 @@ namespace NorthWeird.WebUI.Controllers
 
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    var identity = new ClaimsIdentity("cookies");
+                    var principal = await _claimsPrincipalFactory.CreateAsync(user);
 
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-
-                    await HttpContext.SignInAsync("cookies", new ClaimsPrincipal(identity));
+                    await HttpContext.SignInAsync("Identity.Application", new ClaimsPrincipal(principal));
 
                     RedirectToAction("Index", "Product");
                 }

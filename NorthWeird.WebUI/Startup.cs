@@ -74,12 +74,11 @@ namespace NorthWeird.WebUI
                     sql=>sql.MigrationsAssembly(migrationAssembly))
                 );
 
-            services.AddIdentityCore<IdentityUser>();
-            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
-
             services
-                .AddAuthentication("cookies")
-                .AddCookie("cookies", options => options.LoginPath = "/auth/login");
+                .AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>();
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/auth/login");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
