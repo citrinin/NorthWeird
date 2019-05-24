@@ -14,11 +14,17 @@ namespace NorthWeird.WebUI.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserClaimsPrincipalFactory<IdentityUser> _claimsPrincipalFactory;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AuthController(UserManager<IdentityUser> userManager, IUserClaimsPrincipalFactory<IdentityUser> claimsPrincipalFactory)
+        public AuthController(
+            UserManager<IdentityUser> userManager,
+            IUserClaimsPrincipalFactory<IdentityUser> claimsPrincipalFactory,
+            SignInManager<IdentityUser> signInManager
+            )
         {
             _userManager = userManager;
             _claimsPrincipalFactory = claimsPrincipalFactory;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -66,14 +72,11 @@ namespace NorthWeird.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
+                var signInResult =
+                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
-                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+                if (signInResult.Succeeded)
                 {
-                    var principal = await _claimsPrincipalFactory.CreateAsync(user);
-
-                    await HttpContext.SignInAsync("Identity.Application", new ClaimsPrincipal(principal));
-
                     RedirectToAction("Index", "Product");
                 }
 
