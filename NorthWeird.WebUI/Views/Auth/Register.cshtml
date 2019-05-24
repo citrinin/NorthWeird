@@ -2,38 +2,49 @@
 @{
     ViewData["Title"] = "Registration";
 }
-<form method="post">
-    <div class="form-group">
-        <div class="row">
-            <label class="col-sm-2 col-form-label" asp-for="UserName"></label>
-            <div class="col-sm-2">
-                <input class="form-control" asp-for="UserName" />
+    <form method="post">
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-form-label" asp-for="UserName"></label>
+                <div class="col-sm-2">
+                    <input class="form-control" asp-for="UserName" />
+                </div>
             </div>
+            <span asp-validation-for="UserName"></span>
         </div>
-        <span asp-validation-for="UserName"></span>
-    </div>
 
-    <div class="form-group">
-        <div class="row">
-            <label class="col-sm-2 col-form-label" asp-for="Password"></label>
-            <div class="col-sm-2">
-                <input class="form-control" asp-for="Password" />
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-form-label" asp-for="Email"></label>
+                <div class="col-sm-2">
+                    <input class="form-control" asp-for="Email" />
+                </div>
             </div>
+            <span asp-validation-for="Email"></span>
         </div>
-        <span asp-validation-for="Password"></span>
-    </div>
-    
-    <div class="form-group">
-        <div class="row">
-            <label class="col-sm-2 col-form-label" asp-for="ConfirmPassword"></label>
-            <div class="col-sm-2">
-                <input class="form-control" asp-for="ConfirmPassword" />
+
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-form-label" asp-for="Password"></label>
+                <div class="col-sm-2">
+                    <input class="form-control" asp-for="Password" />
+                </div>
             </div>
+            <span asp-validation-for="Password"></span>
         </div>
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
 
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-form-label" asp-for="ConfirmPassword"></label>
+                <div class="col-sm-2">
+                    <input class="form-control" asp-for="ConfirmPassword" />
+                </div>
+            </div>
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
 
-    <input class="btn btn-primary" type="submit" name="update" value="Create" />
-    <a class="btn btn-secondary" asp-action="Index" asp-controller="Category">Cancel</a>
-</form>
+        <div asp-validation-summary="All"></div>
+
+        <input class="btn btn-primary" type="submit" name="update" value="Create" />
+        <a class="btn btn-secondary" asp-action="Index" asp-controller="Category">Cancel</a>
+    </form>

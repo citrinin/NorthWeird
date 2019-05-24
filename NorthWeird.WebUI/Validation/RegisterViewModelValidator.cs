@@ -7,7 +7,12 @@ namespace NorthWeird.WebUI.Validation
     {
         public RegisterViewModelValidator()
         {
-            RuleFor(r => r.UserName).NotEmpty();
+            RuleFor(r => r.UserName)
+                .NotEmpty();
+
+            RuleFor(r => r.Email)
+                .EmailAddress()
+                .NotEmpty();
 
             RuleFor(r => r.Password)
                 .Equal(r => r.ConfirmPassword)

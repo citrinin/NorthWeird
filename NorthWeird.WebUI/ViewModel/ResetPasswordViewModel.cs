@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace NorthWeird.WebUI.ViewModel
 {
-    public class RegisterViewModel
+    public class ResetPasswordViewModel
     {
-        public string UserName { get; set; }
+        public string Token { get; set; }
 
         public string Email { get; set; }
 

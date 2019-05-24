@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ using NorthWeird.Application.Interfaces;
 using NorthWeird.Application.Mapping;
 using NorthWeird.Application.Services;
 using NorthWeird.Application.Validation;
+using NorthWeird.Infrastructure.Mailing;
 using NorthWeird.Persistence;
 using NorthWeird.WebUI.Filters;
 using NorthWeird.WebUI.Middleware;
@@ -44,6 +46,7 @@ namespace NorthWeird.WebUI
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<ICategoryData, SqlCategoryData>();
             services.AddScoped<ISupplierData, SqlSupplierData>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             //services.AddScoped<LoggingActionFilterAttribute>();
 
@@ -75,8 +78,12 @@ namespace NorthWeird.WebUI
                 );
 
             services
-                .AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
+                .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+                options.TokenLifespan = TimeSpan.FromHours(3));
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/auth/login");
         }

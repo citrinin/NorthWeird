@@ -1,4 +1,5 @@
-﻿@model NorthWeird.WebUI.ViewModel.LoginViewModel
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model NorthWeird.WebUI.ViewModel.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
@@ -22,7 +23,11 @@
         </div>
         <span asp-validation-for="Password"></span>
     </div>
+    
+    <div asp-validation-summary="All"></div>
 
     <input class="btn btn-primary" type="submit" name="update" value="Login" />
-    <a class="btn btn-secondary" asp-action="Index" asp-controller="Category">Cancel</a>
+    <a class="btn btn-secondary" asp-action="Index" asp-controller="Product">Cancel</a>
+
+    <a class="btn btn-secondary" asp-action="ForgotPassword" asp-controller="Auth">Forgot Password?</a>
 </form>
