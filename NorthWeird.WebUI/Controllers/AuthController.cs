@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using System;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -215,6 +216,63 @@ namespace NorthWeird.WebUI.Controllers
             }
 
             return View("Error");
+        }
+
+        [HttpGet]
+        public IActionResult ExternalLogin(string provider)
+        {
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("ExternalLoginCallback"),
+                Items = {{"scheme", provider}}
+            };
+
+            return Challenge(properties, provider);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExternalLoginCallback()
+        {
+            var result = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+
+            var externalUserId = result.Principal.FindFirstValue("sub")
+                                 ?? result.Principal.FindFirstValue(ClaimTypes.NameIdentifier)
+                                 ?? throw new Exception("Cannot find external user id");
+
+            var provider = result.Properties.Items["scheme"];
+
+            var user = await _userManager.FindByLoginAsync(provider, externalUserId);
+
+            if (user == null)
+            {
+                var email = result.Principal.FindFirstValue("email")
+                            ?? result.Principal.FindFirstValue(ClaimTypes.Email)
+                            ?? result.Principal.FindFirstValue(ClaimTypes.Upn);
+
+                if (email != null)
+                {
+                    user = await _userManager.FindByEmailAsync(email);
+
+                    if (user == null)
+                    {
+                        user = new IdentityUser{UserName = email, Email = email};
+                        await _userManager.CreateAsync(user);
+                    }
+
+                    await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, externalUserId, provider));
+                }
+            }
+
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            await _signInManager.SignInAsync(user, false);
+
+            return RedirectToAction("Index", "Product");
         }
     }
 }

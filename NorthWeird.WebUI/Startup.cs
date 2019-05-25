@@ -86,6 +86,9 @@ namespace NorthWeird.WebUI
                 options.TokenLifespan = TimeSpan.FromHours(3));
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/auth/login");
+
+            services.AddAuthentication().AddAzureAd(options => _configuration.Bind("AzureAd", options));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

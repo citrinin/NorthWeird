@@ -18,7 +18,7 @@
         <div class="row">
             <label class="col-sm-2 col-form-label" asp-for="Password"></label>
             <div class="col-sm-2">
-                <input class="form-control" asp-for="Password" />
+                <input class="form-control" type="password" asp-for="Password" />
             </div>
         </div>
         <span asp-validation-for="Password"></span>
@@ -30,4 +30,5 @@
     <a class="btn btn-secondary" asp-action="Index" asp-controller="Product">Cancel</a>
 
     <a class="btn btn-secondary" asp-action="ForgotPassword" asp-controller="Auth">Forgot Password?</a>
+    <a class="btn btn-secondary" asp-action="ExternalLogin" asp-controller="Auth" asp-route-provider="OpenIdConnect">Login with Azure AD</a>
 </form>

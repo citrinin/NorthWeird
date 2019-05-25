@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Product from './components/Product';
-import Spinner from '../Spinner/Spinner';
+import Product from 'components/ProductList/components/Product';
+import Spinner from 'components/Spinner/Spinner';
 
 class ProductList extends Component {
   state = {
