@@ -1,0 +1,27 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<a class="btn btn-primary py-2 my-2" asp-action="CreateRole">Add new role</a>
+
+<table class="table table-hover table-sm">
+    <tr>
+        <th>User name</th>
+        <th>Email</th>
+        <th>Is email confirmed</th>
+        <th>Edit user</th>
+    </tr>
+
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>@user.EmailConfirmed</td>
+            <td><a class="btn bg-light" asp-action="Edit" asp-route-id="@user.Id">Edit user roles</a></td>
+        </tr>
+    }
+
+</table>

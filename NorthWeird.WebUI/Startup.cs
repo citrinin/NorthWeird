@@ -20,7 +20,6 @@ using NorthWeird.Application.Services;
 using NorthWeird.Application.Validation;
 using NorthWeird.Infrastructure.Mailing;
 using NorthWeird.Persistence;
-using NorthWeird.WebUI.Filters;
 using NorthWeird.WebUI.Middleware;
 using NorthWeird.WebUI.Validation;
 
@@ -79,13 +78,18 @@ namespace NorthWeird.WebUI
 
             services
                 .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>
                 options.TokenLifespan = TimeSpan.FromHours(3));
 
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/auth/login");
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/auth/login";
+                options.AccessDeniedPath = "/administrator/AccessDenied";
+            });
 
             services.AddAuthentication().AddAzureAd(options => _configuration.Bind("AzureAd", options));
 

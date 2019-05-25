@@ -1,0 +1,22 @@
+﻿@model NorthWeird.WebUI.ViewModel.ChangeRoleViewModel
+@{
+    ViewData["Title"] = $"Change roles for {Model.UserEmail}";
+}
+
+<form method="post">
+    <input type="hidden" asp-for="UserId" />
+
+
+    <div class="form-group form-check">
+
+        @foreach (var role in Model.AllRoles)
+        {
+            <input type="checkbox" name="roles" value="@role.Name" class="form-check-input" id="roles"
+                   @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />
+            <label class="form-check-label" for="roles">@role.Name</label>  <br />
+            }
+    </div>
+
+    <input class="btn btn-primary" type="submit" name="update" value="Update" />
+    <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+</form>

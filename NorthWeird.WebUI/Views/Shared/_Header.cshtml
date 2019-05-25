@@ -1,8 +1,8 @@
-﻿@using Microsoft.AspNetCore.Identity
-
-@inject SignInManager<IdentityUser> SignInManager
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
 
 @inject UserManager<IdentityUser> UserManager
+@inject IAuthorizationService AuthorizationService
 
 @{
     var user = await UserManager.GetUserAsync(User);
@@ -29,6 +29,14 @@
                 <li class="@($"nav-item {(string.Equals(ViewContext.RouteData.Values["controller"], "Category") ? "active" : "")}")">
                     <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
                 </li>
+
+                @if (User.Identity.IsAuthenticated && await UserManager.IsInRoleAsync(user, "Admin"))
+                {
+                    <li class="@($"nav-item {(string.Equals(ViewContext.RouteData.Values["controller"], "Administrator") ? "active" : "")}")">
+                        <a class="nav-link" asp-controller="Administrator" asp-action="Index">Users</a>
+                    </li>
+                }
+
             </ul>
             <ul class="navbar-nav ml-auto">
                 @if (User.Identity.IsAuthenticated)
@@ -41,8 +49,8 @@
                                 Hello, @user.UserName
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Logout</a>
                                 <a class="dropdown-item" asp-controller="Auth" asp-action="About">About</a>
+                                <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Logout</a>
                             </div>
                         </div>
                     </li>
