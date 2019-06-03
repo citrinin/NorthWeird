@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NorthWeird.Application.Interfaces;
-using NorthWeird.Domain.Entities;
 using Xunit;
 using NorthWeird.WebUI.Controllers;
 using NorthWeird.Application.Models;

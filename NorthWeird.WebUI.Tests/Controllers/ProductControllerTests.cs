@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NorthWeird.Application.Interfaces;
-using NorthWeird.Domain.Entities;
 using NorthWeird.WebUI.Controllers;
 using System.Collections.Generic;
 using System.Linq;
