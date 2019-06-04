@@ -1,0 +1,24 @@
+[
+    {
+        "outputFileName": "wwwroot/styles/styles.min.css",
+        "inputFiles": [
+            "wwwroot/styles/styles.css",
+            "node_modules/bootstrap/dist/css/bootstrap.css"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/js/app.min.js",
+        "inputFiles": [
+            "wwwroot/js/app.js",
+            "node_modules/bootstrap/dist/js/bootstrap.js",
+            "node_modules/jquery/dist/jquery.js",
+            "node_modules/jquery-validation/dist/jquery.validate.js",
+            "node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+        ],
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        "sourceMap": false
+    }
+]
