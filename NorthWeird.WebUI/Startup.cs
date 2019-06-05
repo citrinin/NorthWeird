@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
@@ -40,7 +41,16 @@ namespace NorthWeird.WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<NorthWeirdDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("Northwind")));
+            var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            //services
+            //    .AddDbContext<IdentityDbContext>(
+            //        options => options.UseSqlServer(_configuration.GetConnectionString("Identity"),
+            //            sql => sql.MigrationsAssembly(migrationAssembly))
+
+            services.AddDbContext<NorthWeirdDbContext>(
+                options => options.UseSqlServer(_configuration.GetConnectionString("Northwind"), 
+                    sql => sql.MigrationsAssembly(migrationAssembly)));
 
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<ICategoryData, SqlCategoryData>();
@@ -61,14 +71,14 @@ namespace NorthWeird.WebUI
 
             if (!_environment.IsDevelopment())
             {
-                services.Configure<MvcOptions>(o => o.Filters.Add(new RequireHttpsAttribute()));
+                //services.Configure<MvcOptions>(o => o.Filters.Add(new RequireHttpsAttribute()));
             }
 
             services.AddAutoMapper(typeof(ProductMappingProfile));
 
             //Identity
 
-            var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            //var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services
                 .AddDbContext<IdentityDbContext>(
@@ -106,10 +116,11 @@ namespace NorthWeird.WebUI
 
             app.UseStaticFiles();
 
-            app.UseNodeModules(env.ContentRootPath);
+            //app.UseNodeModules(env.ContentRootPath);
 
             app.UseImageCaching(new ImageCachingMiddlewareOptions
             {
+                //ContentFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imageCache"),
                 ContentFolder = "D:\\test",
                 MaxCount = 10,
                 ExpirationTime = TimeSpan.FromMinutes(3)

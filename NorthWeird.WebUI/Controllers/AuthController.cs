@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NorthWeird.Infrastructure.Mailing;
 using NorthWeird.WebUI.ViewModel;
 
@@ -20,18 +21,21 @@ namespace NorthWeird.WebUI.Controllers
         private readonly IUserClaimsPrincipalFactory<IdentityUser> _claimsPrincipalFactory;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ILogger<AuthController> _logger;
 
         public AuthController(
             UserManager<IdentityUser> userManager,
             IUserClaimsPrincipalFactory<IdentityUser> claimsPrincipalFactory,
             SignInManager<IdentityUser> signInManager,
-            IEmailSender emailSender
+            IEmailSender emailSender,
+            ILogger<AuthController> logger
             )
         {
             _userManager = userManager;
             _claimsPrincipalFactory = claimsPrincipalFactory;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -93,17 +97,17 @@ namespace NorthWeird.WebUI.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var signInResult =
-                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                var signInResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
                 if (signInResult.Succeeded)
                 {
-                    return RedirectToAction("Index", "Product");
+                    _logger.LogInformation("logged in");
+                    return RedirectToAction("About");
                 }
 
                 ModelState.AddModelError("", "Invalid username or password");
