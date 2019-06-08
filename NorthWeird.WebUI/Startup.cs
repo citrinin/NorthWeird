@@ -112,6 +112,8 @@ namespace NorthWeird.WebUI
             //    app.UseExceptionHandler("/Error");
             //}
 
+            _logger.LogInformation(env.EnvironmentName);
+
             app.UseAuthentication();
 
             app.UseStaticFiles();
@@ -120,8 +122,8 @@ namespace NorthWeird.WebUI
 
             app.UseImageCaching(new ImageCachingMiddlewareOptions
             {
-                //ContentFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imageCache"),
-                ContentFolder = "D:\\test",
+                ContentFolder = env.WebRootPath,
+                //ContentFolder = "D:\\test",
                 MaxCount = 10,
                 ExpirationTime = TimeSpan.FromMinutes(3)
             });
