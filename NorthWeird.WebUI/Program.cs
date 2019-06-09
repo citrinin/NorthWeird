@@ -21,6 +21,7 @@ namespace NorthWeird.WebUI
                     logging.ClearProviders();
                     logging.AddProvider(new FileLoggerProvider(Path.Combine(Directory.GetCurrentDirectory(), $"logger-{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.log")));
                 })
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>();
     }
 }

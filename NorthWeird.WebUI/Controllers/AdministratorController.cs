@@ -12,7 +12,7 @@ using NorthWeird.WebUI.ViewModel;
 
 namespace NorthWeird.WebUI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class AdministratorController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
